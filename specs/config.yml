@@ -1,0 +1,77 @@
+provider:
+  name: appstore
+
+data_sources:
+  app_group:
+    read:
+      path: /apps/appstore.eda.nokia.com
+      method: GET
+
+  app_installer:
+    read:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}
+      method: GET
+
+  app_installer_list:
+    read:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers
+      method: GET
+
+  catalog:
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: GET
+
+  catalog_list:
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs
+      method: GET
+
+  registry:
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: GET
+
+  registry_list:
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/registries
+      method: GET
+
+  resource_list:
+    read:
+      path: /apps/appstore.eda.nokia.com/v1
+      method: GET
+
+  workflow_get_inputs_resp_elem:
+    read:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}/_input
+      method: GET
+
+resources:
+  catalog:
+    create:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs
+      method: POST
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: GET
+    update:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: PUT
+    delete:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: DELETE
+
+  registry:
+    create:
+      path: /apps/appstore.eda.nokia.com/v1/registries
+      method: POST
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: GET
+    update:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: PUT
+    delete:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: DELETE

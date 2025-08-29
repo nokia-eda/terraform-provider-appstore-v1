@@ -1,0 +1,152 @@
+app_group:
+  - read:
+      path: /apps/appstore.eda.nokia.com
+      method: GET
+
+patch:
+  - update:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: PATCH
+  - update:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: PATCH
+
+resource_history:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_revs
+      method: GET
+
+resource_list:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1
+      method: GET
+
+resource_topology:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_topology
+      method: GET
+
+status:
+  - delete:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: DELETE
+  - delete:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: DELETE
+
+ui_result:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/_ui/{pathname}
+      method: GET
+
+workflow_get_inputs_resp_elem:
+  - read:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}/_input
+      method: GET
+
+workflow_input_data:
+  - update:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}/_input
+      method: PUT
+
+com.nokia.eda.appstore.v1.app_installer:
+  - create:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers
+      method: POST
+  - read:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}
+      method: GET
+
+com.nokia.eda.appstore.v1.app_installer_list:
+  - read:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers
+      method: GET
+
+com.nokia.eda.appstore.v1.catalog:
+  - create:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs
+      method: POST
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: GET
+  - update:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+      method: PUT
+
+com.nokia.eda.appstore.v1.catalog_list:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs
+      method: GET
+  - delete:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs
+      method: DELETE
+
+com.nokia.eda.appstore.v1.catalog_deleted_resources:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/_deleted
+      method: GET
+
+com.nokia.eda.appstore.v1.registry:
+  - create:
+      path: /apps/appstore.eda.nokia.com/v1/registries
+      method: POST
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: GET
+  - update:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: PUT
+
+com.nokia.eda.appstore.v1.registry_list:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/registries
+      method: GET
+  - delete:
+      path: /apps/appstore.eda.nokia.com/v1/registries
+      method: DELETE
+
+com.nokia.eda.appstore.v1.registry_deleted_resources:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/registries/_deleted
+      method: GET
+
+totalPaths: 19
+totalSchemas: 46
+usedSchemas: 17
+unusedSchemas: 29
+unusedSchemaList:
+  - AppGroupVersion
+  - ErrorIndex
+  - ErrorItem
+  - ErrorResponse
+  - K8SPatchOp
+  - OverlayState
+  - Resource
+  - ResourceHistoryEntry
+  - StatusDetails
+  - TopoAttrMetadata
+  - TopoElemMetadata
+  - TopoLinkEndpoint
+  - TopoNodeGrouping
+  - TopoOverlayEndpoint
+  - TopoOverlayEndpointState
+  - TopoOverlayLink
+  - TopoOverlayLinkState
+  - TopoOverlayNode
+  - TopoOverlayNodeState
+  - TopoSchema
+  - Topology
+  - WorkflowId
+  - WorkflowIdentifier
+  - WorkflowInputDataElem
+  - com.nokia.eda.appstore.v1.AppInstaller_metadata
+  - com.nokia.eda.appstore.v1.Catalog_DeletedResourceEntry
+  - com.nokia.eda.appstore.v1.Catalog_metadata
+  - com.nokia.eda.appstore.v1.Registry_DeletedResourceEntry
+  - com.nokia.eda.appstore.v1.Registry_metadata
