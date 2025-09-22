@@ -44,7 +44,7 @@ Default is 180 seconds. Minimum is 30 seconds for production environments; 10 se
 - `remote_type` (String) RemoteType type of the catalog, only 'git' is supported at the moment.
 - `remote_url` (String) RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.
 Default is HTTPS if no scheme is given.
-- `skip_tlsverify` (Boolean) SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure.
+- `skip_tls_verify` (Boolean) SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure.
 - `title` (String) Title is an UI-friendly name for the catalog.
 
 

@@ -54,7 +54,7 @@ Optional:
 Must be in the same namespace as the catalog.
 - `mirror` (String) Mirror registry of the original remote registry.
 App store will use the mirror instead of the original registry that is referenced by a catalog.
-- `skip_tlsverify` (Boolean) Skip TLS Verification on connection
+- `skip_tls_verify` (Boolean) Skip TLS Verification on connection
 - `title` (String) Title is an UI-friendly name for the catalog.
 
 

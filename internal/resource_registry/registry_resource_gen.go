@@ -89,7 +89,7 @@ func RegistryResourceSchema(ctx context.Context) schema.Schema {
 						Description:         "RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.\n\tDefault is HTTPS if no scheme is given.",
 						MarkdownDescription: "RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.\n\tDefault is HTTPS if no scheme is given.",
 					},
-					"skip_tlsverify": schema.BoolAttribute{
+					"skip_tls_verify": schema.BoolAttribute{
 						Optional:            true,
 						Computed:            true,
 						Description:         "Skip TLS Verification on connection",
@@ -725,22 +725,22 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 			fmt.Sprintf(`remote_url expected to be basetypes.StringValue, was: %T`, remoteUrlAttribute))
 	}
 
-	skipTlsverifyAttribute, ok := attributes["skip_tlsverify"]
+	skipTlsVerifyAttribute, ok := attributes["skip_tls_verify"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`skip_tlsverify is missing from object`)
+			`skip_tls_verify is missing from object`)
 
 		return nil, diags
 	}
 
-	skipTlsverifyVal, ok := skipTlsverifyAttribute.(basetypes.BoolValue)
+	skipTlsVerifyVal, ok := skipTlsVerifyAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`skip_tlsverify expected to be basetypes.BoolValue, was: %T`, skipTlsverifyAttribute))
+			fmt.Sprintf(`skip_tls_verify expected to be basetypes.BoolValue, was: %T`, skipTlsVerifyAttribute))
 	}
 
 	titleAttribute, ok := attributes["title"]
@@ -769,7 +769,7 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 		AuthSecretRef: authSecretRefVal,
 		Mirror:        mirrorVal,
 		RemoteUrl:     remoteUrlVal,
-		SkipTlsverify: skipTlsverifyVal,
+		SkipTlsVerify: skipTlsVerifyVal,
 		Title:         titleVal,
 		state:         attr.ValueStateKnown,
 	}, diags
@@ -892,22 +892,22 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 			fmt.Sprintf(`remote_url expected to be basetypes.StringValue, was: %T`, remoteUrlAttribute))
 	}
 
-	skipTlsverifyAttribute, ok := attributes["skip_tlsverify"]
+	skipTlsVerifyAttribute, ok := attributes["skip_tls_verify"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`skip_tlsverify is missing from object`)
+			`skip_tls_verify is missing from object`)
 
 		return NewSpecValueUnknown(), diags
 	}
 
-	skipTlsverifyVal, ok := skipTlsverifyAttribute.(basetypes.BoolValue)
+	skipTlsVerifyVal, ok := skipTlsVerifyAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`skip_tlsverify expected to be basetypes.BoolValue, was: %T`, skipTlsverifyAttribute))
+			fmt.Sprintf(`skip_tls_verify expected to be basetypes.BoolValue, was: %T`, skipTlsVerifyAttribute))
 	}
 
 	titleAttribute, ok := attributes["title"]
@@ -936,7 +936,7 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 		AuthSecretRef: authSecretRefVal,
 		Mirror:        mirrorVal,
 		RemoteUrl:     remoteUrlVal,
-		SkipTlsverify: skipTlsverifyVal,
+		SkipTlsVerify: skipTlsVerifyVal,
 		Title:         titleVal,
 		state:         attr.ValueStateKnown,
 	}, diags
@@ -1013,7 +1013,7 @@ type SpecValue struct {
 	AuthSecretRef basetypes.StringValue `tfsdk:"auth_secret_ref"`
 	Mirror        basetypes.StringValue `tfsdk:"mirror"`
 	RemoteUrl     basetypes.StringValue `tfsdk:"remote_url"`
-	SkipTlsverify basetypes.BoolValue   `tfsdk:"skip_tlsverify"`
+	SkipTlsVerify basetypes.BoolValue   `tfsdk:"skip_tls_verify"`
 	Title         basetypes.StringValue `tfsdk:"title"`
 	state         attr.ValueState
 }
@@ -1027,7 +1027,7 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 	attrTypes["auth_secret_ref"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["mirror"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["remote_url"] = basetypes.StringType{}.TerraformType(ctx)
-	attrTypes["skip_tlsverify"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["skip_tls_verify"] = basetypes.BoolType{}.TerraformType(ctx)
 	attrTypes["title"] = basetypes.StringType{}.TerraformType(ctx)
 
 	objectType := tftypes.Object{AttributeTypes: attrTypes}
@@ -1060,13 +1060,13 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 
 		vals["remote_url"] = val
 
-		val, err = v.SkipTlsverify.ToTerraformValue(ctx)
+		val, err = v.SkipTlsVerify.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["skip_tlsverify"] = val
+		vals["skip_tls_verify"] = val
 
 		val, err = v.Title.ToTerraformValue(ctx)
 
@@ -1109,7 +1109,7 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 		"auth_secret_ref": basetypes.StringType{},
 		"mirror":          basetypes.StringType{},
 		"remote_url":      basetypes.StringType{},
-		"skip_tlsverify":  basetypes.BoolType{},
+		"skip_tls_verify": basetypes.BoolType{},
 		"title":           basetypes.StringType{},
 	}
 
@@ -1127,7 +1127,7 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 			"auth_secret_ref": v.AuthSecretRef,
 			"mirror":          v.Mirror,
 			"remote_url":      v.RemoteUrl,
-			"skip_tlsverify":  v.SkipTlsverify,
+			"skip_tls_verify": v.SkipTlsVerify,
 			"title":           v.Title,
 		})
 
@@ -1161,7 +1161,7 @@ func (v SpecValue) Equal(o attr.Value) bool {
 		return false
 	}
 
-	if !v.SkipTlsverify.Equal(other.SkipTlsverify) {
+	if !v.SkipTlsVerify.Equal(other.SkipTlsVerify) {
 		return false
 	}
 
@@ -1185,7 +1185,7 @@ func (v SpecValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		"auth_secret_ref": basetypes.StringType{},
 		"mirror":          basetypes.StringType{},
 		"remote_url":      basetypes.StringType{},
-		"skip_tlsverify":  basetypes.BoolType{},
+		"skip_tls_verify": basetypes.BoolType{},
 		"title":           basetypes.StringType{},
 	}
 }

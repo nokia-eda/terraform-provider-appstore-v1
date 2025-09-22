@@ -42,7 +42,7 @@ Must be in the same namespace as the catalog.
 App store will use the mirror instead of the original registry that is referenced by a catalog.
 - `remote_url` (String) RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.
 	Default is HTTPS if no scheme is given.
-- `skip_tlsverify` (Boolean) Skip TLS Verification on connection
+- `skip_tls_verify` (Boolean) Skip TLS Verification on connection
 - `title` (String) Title is an UI-friendly name for the catalog.
 
 

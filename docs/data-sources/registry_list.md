@@ -19,7 +19,7 @@ description: |-
 
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
-- `labelselector` (String) a label selector string to filter the results based on CR labels
+- `label_selector` (String) a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -52,7 +52,7 @@ Must be in the same namespace as the catalog.
 App store will use the mirror instead of the original registry that is referenced by a catalog.
 - `remote_url` (String) RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.
 	Default is HTTPS if no scheme is given.
-- `skip_tlsverify` (Boolean) Skip TLS Verification on connection
+- `skip_tls_verify` (Boolean) Skip TLS Verification on connection
 - `title` (String) Title is an UI-friendly name for the catalog.
 
 
