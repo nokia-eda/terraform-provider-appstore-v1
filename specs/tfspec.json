@@ -79,9 +79,55 @@
                         }
                     },
                     {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "name": "api_version",
                         "string": {
                             "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
                         }
                     },
                     {
@@ -118,6 +164,12 @@
                                     "string": {
                                         "computed_optional_required": "computed"
                                     }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
                                 }
                             ]
                         }
@@ -144,7 +196,7 @@
                                                     "name": "app_settings",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
-                                                        "description": "AppSettings defines a list of variables and their value. Only variables that are customised need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
+                                                        "description": "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
                                                     }
                                                 },
                                                 {
@@ -190,6 +242,13 @@
                                             "string": {}
                                         },
                                         "description": "AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.\nCurrently only 'strict' is supported."
+                                    }
+                                },
+                                {
+                                    "name": "dry_run",
+                                    "bool": {
+                                        "computed_optional_required": "optional",
+                                        "description": "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result."
                                     }
                                 },
                                 {
@@ -258,6 +317,13 @@
                         }
                     },
                     {
+                        "name": "labelselector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "Deprecated: a label selector string to filter the results based on CR labels"
+                        }
+                    },
+                    {
                         "name": "api_version",
                         "string": {
                             "computed_optional_required": "computed"
@@ -270,9 +336,55 @@
                             "nested_object": {
                                 "attributes": [
                                     {
+                                        "name": "alarms",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "critical",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "major",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "minor",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "warning",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "name": "api_version",
                                         "string": {
                                             "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "deviations",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -309,6 +421,12 @@
                                                     "string": {
                                                         "computed_optional_required": "computed"
                                                     }
+                                                },
+                                                {
+                                                    "name": "namespace",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
                                                 }
                                             ]
                                         }
@@ -335,7 +453,7 @@
                                                                     "name": "app_settings",
                                                                     "single_nested": {
                                                                         "computed_optional_required": "optional",
-                                                                        "description": "AppSettings defines a list of variables and their value. Only variables that are customised need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
+                                                                        "description": "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
                                                                     }
                                                                 },
                                                                 {
@@ -381,6 +499,13 @@
                                                             "string": {}
                                                         },
                                                         "description": "AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.\nCurrently only 'strict' is supported."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "dry_run",
+                                                    "bool": {
+                                                        "computed_optional_required": "optional",
+                                                        "description": "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result."
                                                     }
                                                 },
                                                 {
@@ -452,9 +577,55 @@
                         }
                     },
                     {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "name": "api_version",
                         "string": {
                             "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
                         }
                     },
                     {
@@ -488,6 +659,12 @@
                                 },
                                 {
                                     "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
                                     "string": {
                                         "computed_optional_required": "computed"
                                     }
@@ -612,6 +789,13 @@
                         }
                     },
                     {
+                        "name": "labelselector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "Deprecated: a label selector string to filter the results based on CR labels"
+                        }
+                    },
+                    {
                         "name": "api_version",
                         "string": {
                             "computed_optional_required": "computed"
@@ -624,9 +808,55 @@
                             "nested_object": {
                                 "attributes": [
                                     {
+                                        "name": "alarms",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "critical",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "major",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "minor",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "warning",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "name": "api_version",
                                         "string": {
                                             "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "deviations",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -660,6 +890,12 @@
                                                 },
                                                 {
                                                     "name": "name",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "namespace",
                                                     "string": {
                                                         "computed_optional_required": "computed"
                                                     }
@@ -787,9 +1023,55 @@
                         }
                     },
                     {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "name": "api_version",
                         "string": {
                             "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
                         }
                     },
                     {
@@ -826,6 +1108,12 @@
                                     "string": {
                                         "computed_optional_required": "computed"
                                     }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
                                 }
                             ]
                         }
@@ -839,14 +1127,14 @@
                                     "name": "auth_secret_ref",
                                     "string": {
                                         "computed_optional_required": "optional",
-                                        "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog."
+                                        "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry."
                                     }
                                 },
                                 {
                                     "name": "mirror",
                                     "string": {
                                         "computed_optional_required": "optional",
-                                        "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a catalog."
+                                        "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry."
                                     }
                                 },
                                 {
@@ -867,7 +1155,7 @@
                                     "name": "title",
                                     "string": {
                                         "computed_optional_required": "optional",
-                                        "description": "Title is an UI-friendly name for the catalog."
+                                        "description": "Title is an UI-friendly name for the registry."
                                     }
                                 }
                             ],
@@ -926,6 +1214,13 @@
                         }
                     },
                     {
+                        "name": "labelselector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "Deprecated: a label selector string to filter the results based on CR labels"
+                        }
+                    },
+                    {
                         "name": "api_version",
                         "string": {
                             "computed_optional_required": "computed"
@@ -938,9 +1233,55 @@
                             "nested_object": {
                                 "attributes": [
                                     {
+                                        "name": "alarms",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "critical",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "major",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "minor",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "warning",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "name": "api_version",
                                         "string": {
                                             "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "deviations",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -977,6 +1318,12 @@
                                                     "string": {
                                                         "computed_optional_required": "computed"
                                                     }
+                                                },
+                                                {
+                                                    "name": "namespace",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
                                                 }
                                             ]
                                         }
@@ -990,14 +1337,14 @@
                                                     "name": "auth_secret_ref",
                                                     "string": {
                                                         "computed_optional_required": "optional",
-                                                        "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog."
+                                                        "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry."
                                                     }
                                                 },
                                                 {
                                                     "name": "mirror",
                                                     "string": {
                                                         "computed_optional_required": "optional",
-                                                        "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a catalog."
+                                                        "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry."
                                                     }
                                                 },
                                                 {
@@ -1018,7 +1365,7 @@
                                                     "name": "title",
                                                     "string": {
                                                         "computed_optional_required": "optional",
-                                                        "description": "Title is an UI-friendly name for the catalog."
+                                                        "description": "Title is an UI-friendly name for the registry."
                                                     }
                                                 }
                                             ],
@@ -1204,9 +1551,41 @@
     },
     "resources": [
         {
-            "name": "catalog",
+            "name": "app_installer",
             "schema": {
                 "attributes": [
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     {
                         "name": "api_version",
                         "string": {
@@ -1226,6 +1605,338 @@
                                             }
                                         ],
                                         "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^appstore\\\\.eda\\\\.nokia\\\\.com/v1$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "AppInstaller"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^AppInstaller$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "required",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.LengthAtMost(253)"
+                                                }
+                                            },
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "regexp"
+                                                        },
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$\"), \"\")"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": "eda-system"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "apps",
+                                    "list_nested": {
+                                        "computed_optional_required": "required",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "app_id",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "app_settings",
+                                                    "single_nested": {
+                                                        "computed_optional_required": "optional",
+                                                        "description": "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "catalog",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Catalog of the app to be installed.\nThis is where app manifest is retrieved from, along with some other metadata."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "version",
+                                                    "single_nested": {
+                                                        "computed_optional_required": "required",
+                                                        "attributes": [
+                                                            {
+                                                                "name": "type",
+                                                                "string": {
+                                                                    "computed_optional_required": "computed_optional",
+                                                                    "default": {
+                                                                        "static": "semver"
+                                                                    },
+                                                                    "description": "The version type of the App. Currently supported: semver, commit.\nDefault is semver.",
+                                                                    "validators": [
+                                                                        {
+                                                                            "custom": {
+                                                                                "imports": [
+                                                                                    {
+                                                                                        "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                                    }
+                                                                                ],
+                                                                                "schema_definition": "stringvalidator.OneOf(\n\"semver\",\n\"commit\",\n)"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "string": {
+                                                                    "computed_optional_required": "required",
+                                                                    "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected."
+                                                                }
+                                                            }
+                                                        ],
+                                                        "description": "Version of the App that is to be installed."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "Apps are the input apps to the installer."
+                                    }
+                                },
+                                {
+                                    "name": "auto_process_requirements",
+                                    "list": {
+                                        "computed_optional_required": "optional",
+                                        "element_type": {
+                                            "string": {}
+                                        },
+                                        "description": "AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.\nCurrently only 'strict' is supported."
+                                    }
+                                },
+                                {
+                                    "name": "dry_run",
+                                    "bool": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": false
+                                        },
+                                        "description": "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result."
+                                    }
+                                },
+                                {
+                                    "name": "operation",
+                                    "string": {
+                                        "computed_optional_required": "required",
+                                        "description": "Operation is the installing operation.\nCurrently supported are 'install', 'delete'.",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.OneOf(\n\"install\",\n\"delete\",\n)"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "error",
+                                    "string": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "id",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional",
+                                        "description": "ID is the workflow ID that can be used to get more information on."
+                                    }
+                                },
+                                {
+                                    "name": "result",
+                                    "string": {
+                                        "computed_optional_required": "required"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "name of the AppInstaller"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "catalog",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "appstore.eda.nokia.com/v1"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^appstore\\\\.eda\\\\.nokia\\\\.com/v1$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
                                     }
                                 }
                             ]
@@ -1307,6 +2018,15 @@
                                                 }
                                             }
                                         ]
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": "eda-system"
+                                        }
                                     }
                                 }
                             ]
@@ -1463,6 +2183,38 @@
             "schema": {
                 "attributes": [
                     {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "name": "api_version",
                         "string": {
                             "computed_optional_required": "computed_optional",
@@ -1481,6 +2233,20 @@
                                             }
                                         ],
                                         "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^appstore\\\\.eda\\\\.nokia\\\\.com/v1$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
                                     }
                                 }
                             ]
@@ -1563,6 +2329,15 @@
                                             }
                                         ]
                                     }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": "eda-system"
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -1576,14 +2351,14 @@
                                     "name": "auth_secret_ref",
                                     "string": {
                                         "computed_optional_required": "optional",
-                                        "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog."
+                                        "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry."
                                     }
                                 },
                                 {
                                     "name": "mirror",
                                     "string": {
                                         "computed_optional_required": "optional",
-                                        "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a catalog."
+                                        "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry."
                                     }
                                 },
                                 {
@@ -1607,7 +2382,7 @@
                                     "name": "title",
                                     "string": {
                                         "computed_optional_required": "optional",
-                                        "description": "Title is an UI-friendly name for the catalog.",
+                                        "description": "Title is an UI-friendly name for the registry.",
                                         "validators": [
                                             {
                                                 "custom": {

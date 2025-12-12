@@ -22,7 +22,9 @@ description: |-
 
 ### Optional
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `name` (String) name of the Catalog
 - `status` (Attributes) CatalogStatus defines the observed state of a Catalog. (see [below for nested schema](#nestedatt--status))
@@ -38,6 +40,7 @@ Optional:
 
 - `annotations` (Map of String)
 - `labels` (Map of String)
+- `namespace` (String)
 
 
 <a id="nestedatt--spec"></a>
@@ -55,6 +58,25 @@ Default is 180 seconds. Minimum is 30 seconds for production environments; 10 se
 Default is HTTPS if no scheme is given.
 - `skip_tls_verify` (Boolean) SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure.
 - `title` (String) Title is an UI-friendly name for the catalog.
+
+
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Optional:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Optional:
+
+- `count` (Number)
 
 
 <a id="nestedatt--status"></a>

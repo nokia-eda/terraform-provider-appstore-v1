@@ -48,6 +48,17 @@ data_sources:
       method: GET
 
 resources:
+  app_installer:
+    create:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers
+      method: POST
+    read:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}
+      method: GET
+    delete:
+      path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}
+      method: DELETE
+
   catalog:
     create:
       path: /apps/appstore.eda.nokia.com/v1/catalogs

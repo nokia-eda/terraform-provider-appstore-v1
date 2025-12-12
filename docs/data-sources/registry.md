@@ -26,7 +26,9 @@ description: |-
 
 ### Read-Only
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--metadata))
 - `status` (Attributes) RegistryStatus defines the observed state of Registry (see [below for nested schema](#nestedatt--status))
@@ -37,13 +39,32 @@ description: |-
 Optional:
 
 - `auth_secret_ref` (String) AuthSecretRef is the authentication secret reference, used for authentication.
-Must be in the same namespace as the catalog.
+Must be in the same namespace as the registry.
 - `mirror` (String) Mirror registry of the original remote registry.
-App store will use the mirror instead of the original registry that is referenced by a catalog.
+App store will use the mirror instead of the original registry that is referenced by a registry.
 - `remote_url` (String) RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.
 	Default is HTTPS if no scheme is given.
 - `skip_tls_verify` (Boolean) Skip TLS Verification on connection
-- `title` (String) Title is an UI-friendly name for the catalog.
+- `title` (String) Title is an UI-friendly name for the registry.
+
+
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Read-Only:
+
+- `count` (Number)
 
 
 <a id="nestedatt--metadata"></a>
@@ -54,6 +75,7 @@ Read-Only:
 - `annotations` (Map of String)
 - `labels` (Map of String)
 - `name` (String)
+- `namespace` (String)
 
 
 <a id="nestedatt--status"></a>

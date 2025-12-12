@@ -57,28 +57,56 @@
         "type": "object"
       },
       "ErrorResponse": {
-        "description": "Generic error response for REST APIs",
         "properties": {
+          "causeCollection": {
+            "description": "A lower-level set of structured errors.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
+            "items": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "type": "array"
+          },
+          "causeIndexedCollection": {
+            "description": "A lower-level set of structured errors.\nEach of these errors MUST have index set.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
+            "items": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "type": "array"
+          },
+          "causeIsInternal": {
+            "description": "If true, then the cause (`causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection`) should be hidden from the user.",
+            "type": "boolean"
+          },
+          "causeSimple": {
+            "description": "Simple string error type.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
+            "type": "string"
+          },
+          "causeWrapped": {
+            "$ref": "#/components/schemas/ErrorResponse"
+          },
           "code": {
-            "description": "the numeric HTTP error code for the response.",
+            "deprecated": true,
+            "description": "the numeric HTTP error code for the response.\n\nDeprecated: Prefer to check the request's HTTP response code directly.",
             "format": "int64",
             "type": "integer"
           },
           "details": {
-            "description": "The optional details of the error response.",
+            "deprecated": true,
+            "description": "The optional details of the error response.\nDeprecated: Replaced by `causeSimple`.",
             "type": "string"
           },
           "dictionary": {
             "additionalProperties": true,
-            "description": "Dictionary/map of associated data/information relevant to the error.\nThe error \"message\" may contain {{name}} escapes that should be substituted\nwith information from this dictionary.",
+            "deprecated": true,
+            "description": "Dictionary/map of associated data/information relevant to the error.\nThe error \"message\" may contain {{name}} escapes that should be substituted\nwith information from this dictionary.\n\nDeprecated: Use \"values\" instead.",
             "type": "object"
           },
           "domain": {
-            "description": "The \"domain\" for the error.  If empty, it is an EDA\ncore error.  Alternatively it can be an EDA application\n\"apiVersion\" value (e.g. interfaces.eda.nokia.com/v1alpha1)\nindicating that the error is specific to that application.\nThe domain gives the receiver information that they can use\nto help them interpret the \"internal\" error code value, or\nto find an internationalization translation for the message.",
+            "description": "The \"domain\" for the error.  If empty, it is an EDA\ncore error.  Alternatively it can be an EDA application\n\"apiVersion\" value (e.g. interfaces.eda.nokia.com/v1alpha1)\nindicating that the error is specific to that application.\nThe domain gives the receiver information that they can use\nto help them interpret the \"type\" field.",
             "type": "string"
           },
           "errors": {
-            "description": "Collection of errors in cases where more than one exists. This needs to be\nflexible so we can support multiple formats",
+            "deprecated": true,
+            "description": "Collection of errors in cases where more than one exists.\nThis needs to be flexible so we can support multiple formats.\nDeprecated: Replaced by `causeCollection` or `causeIndexedCollection` instead.",
             "items": {
               "$ref": "#/components/schemas/ErrorItem"
             },
@@ -88,7 +116,8 @@
             "$ref": "#/components/schemas/ErrorIndex"
           },
           "internal": {
-            "description": "Internal error code in cases where we don't have an array of errors",
+            "deprecated": true,
+            "description": "Internal error code number.\n\nDeprecated: \"type\" \u0026 \"domain\" should be used instead to uniquely identify this error.",
             "format": "int64",
             "type": "integer"
           },
@@ -97,19 +126,45 @@
             "type": "string"
           },
           "ref": {
-            "description": "Reference to the error source. Should typically be the URI of the request",
+            "description": "Reference to the error source. Should typically be the URI of the request.",
             "type": "string"
           },
           "type": {
-            "description": "URI pointing at a document that describes the error and mitigation steps\nIf there is no document, point to the RFC for the HTTP error code",
+            "description": "Type defines a unique identifier for the error, within the domain.\nThis may be used (along with the domain) to find an internationalization translation for the message.\n\nSHOULD be a valid golang identifier, and SHOULD be in UpperCamelCase.",
             "type": "string"
+          },
+          "values": {
+            "additionalProperties": {
+              "type": "object"
+            },
+            "description": "Associated data/information.\nThe error \"message\" may contain {{name}} escapes that should be substituted with information from this dictionary.\n\nNote that this map MUST NOT contain JSON objects (`{...}`) or arrays (`[...]`), only simple JSON types are permitted.",
+            "type": "object"
           }
         },
         "required": [
-          "code",
-          "message"
+          "internal",
+          "message",
+          "type"
         ],
+        "title": "Generic error response for REST APIs.",
         "type": "object"
+      },
+      "IntentTarget": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "IntentTargets": {
+        "items": {
+          "$ref": "#/components/schemas/IntentTarget"
+        },
+        "type": "array"
       },
       "K8SPatchOp": {
         "properties": {
@@ -135,8 +190,28 @@
         ],
         "type": "object"
       },
+      "K8STopologyRequest": {
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/TopoStateFilter"
+          },
+          "recurse": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "OverlayState": {
         "properties": {
+          "link_groups": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayLinkGroup"
+            },
+            "type": "object"
+          },
           "links": {
             "additionalProperties": {
               "$ref": "#/components/schemas/TopoOverlayLink"
@@ -146,6 +221,12 @@
           "nodes": {
             "additionalProperties": {
               "$ref": "#/components/schemas/TopoOverlayNode"
+            },
+            "type": "object"
+          },
+          "nodes_and_groups": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayNodeOrGroup"
             },
             "type": "object"
           }
@@ -295,6 +376,51 @@
         },
         "type": "object"
       },
+      "TopoAttribute": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoBoolExpression": {
+        "properties": {
+          "endpoint_expression": {
+            "$ref": "#/components/schemas/TopoEndpointBoolExpression"
+          },
+          "fixed_expression": {
+            "$ref": "#/components/schemas/TopoFixedBoolExpression"
+          },
+          "has_badge": {
+            "$ref": "#/components/schemas/TopoLiteralStatusOrBadge"
+          },
+          "label": {
+            "$ref": "#/components/schemas/TopoLabelSelector"
+          },
+          "literal": {
+            "$ref": "#/components/schemas/TopoBoolLiteral"
+          },
+          "logical": {
+            "$ref": "#/components/schemas/TopoLogicalExpression"
+          },
+          "not": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          },
+          "value_expression": {
+            "$ref": "#/components/schemas/TopoValueExpression"
+          }
+        },
+        "type": "object"
+      },
+      "TopoBoolLiteral": {
+        "properties": {
+          "value": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
       "TopoElemMetadata": {
         "properties": {
           "attributes": {
@@ -315,16 +441,87 @@
         },
         "type": "object"
       },
-      "TopoLinkEndpoint": {
+      "TopoEndpointBoolExpression": {
         "properties": {
           "endpoint": {
             "type": "string"
           },
-          "node": {
+          "expression": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          }
+        },
+        "type": "object"
+      },
+      "TopoField": {
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoFixedBoolExpression": {
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLabelSelector": {
+        "properties": {
+          "selector": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLiteralStatusOrBadge": {
+        "properties": {
+          "overlay": {
             "type": "string"
           },
-          "node_key": {
+          "value": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLiteralValue": {
+        "properties": {
+          "badge": {
+            "$ref": "#/components/schemas/TopoLiteralStatusOrBadge"
+          },
+          "bool": {
+            "type": "boolean"
+          },
+          "number": {
+            "format": "double",
+            "type": "number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TopoLiteralStatusOrBadge"
+          },
+          "string": {
             "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoLogicalExpression": {
+        "properties": {
+          "left": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "right": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
           }
         },
         "type": "object"
@@ -332,6 +529,9 @@
       "TopoNodeGrouping": {
         "properties": {
           "group": {
+            "type": "string"
+          },
+          "group_key": {
             "type": "string"
           },
           "tier": {
@@ -364,6 +564,12 @@
           "namespace": {
             "type": "string"
           },
+          "node": {
+            "type": "string"
+          },
+          "node_key": {
+            "type": "string"
+          },
           "overlays": {
             "additionalProperties": {
               "$ref": "#/components/schemas/TopoOverlayEndpointState"
@@ -372,10 +578,6 @@
           },
           "schema": {
             "$ref": "#/components/schemas/TopoSchema"
-          },
-          "state": {
-            "format": "int64",
-            "type": "integer"
           },
           "ui_name": {
             "type": "string"
@@ -404,16 +606,19 @@
             "type": "string"
           },
           "endpoint_a": {
-            "$ref": "#/components/schemas/TopoLinkEndpoint"
-          },
-          "endpoint_a_details": {
             "$ref": "#/components/schemas/TopoOverlayEndpoint"
+          },
+          "endpoint_a_name": {
+            "type": "string"
           },
           "endpoint_b": {
-            "$ref": "#/components/schemas/TopoLinkEndpoint"
-          },
-          "endpoint_b_details": {
             "$ref": "#/components/schemas/TopoOverlayEndpoint"
+          },
+          "endpoint_b_name": {
+            "type": "string"
+          },
+          "group_key": {
+            "type": "string"
           },
           "key": {
             "type": "string"
@@ -439,11 +644,38 @@
           "schema": {
             "$ref": "#/components/schemas/TopoSchema"
           },
-          "state": {
-            "format": "int64",
-            "type": "integer"
-          },
           "ui_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayLinkGroup": {
+        "properties": {
+          "endpoint_a": {
+            "$ref": "#/components/schemas/TopoOverlayLinkGroupEndpoint"
+          },
+          "endpoint_b": {
+            "$ref": "#/components/schemas/TopoOverlayLinkGroupEndpoint"
+          },
+          "key": {
+            "type": "string"
+          },
+          "overlays": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayLinkState"
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayLinkGroupEndpoint": {
+        "properties": {
+          "group_key": {
+            "type": "string"
+          },
+          "node_key": {
             "type": "string"
           }
         },
@@ -465,13 +697,6 @@
               "type": "object"
             },
             "type": "object"
-          },
-          "badges": {
-            "items": {
-              "format": "int64",
-              "type": "integer"
-            },
-            "type": "array"
           },
           "cr_name": {
             "type": "string"
@@ -503,9 +728,56 @@
           "schema": {
             "$ref": "#/components/schemas/TopoSchema"
           },
-          "state": {
+          "ui_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoOverlayNodeOrGroup": {
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "cr_name": {
+            "type": "string"
+          },
+          "grouping": {
+            "$ref": "#/components/schemas/TopoNodeGrouping"
+          },
+          "key": {
+            "type": "string"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "num_nodes": {
             "format": "int64",
             "type": "integer"
+          },
+          "overlays": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TopoOverlayNodeState"
+            },
+            "type": "object"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/TopoSchema"
+          },
+          "type": {
+            "type": "string"
           },
           "ui_name": {
             "type": "string"
@@ -529,6 +801,14 @@
         },
         "type": "object"
       },
+      "TopoOverlayValue": {
+        "properties": {
+          "overlay": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "TopoSchema": {
         "properties": {
           "group": {
@@ -539,6 +819,69 @@
           },
           "version": {
             "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TopoStateFilter": {
+        "properties": {
+          "expand_all_link_groups": {
+            "type": "boolean"
+          },
+          "expand_all_node_groups": {
+            "type": "boolean"
+          },
+          "expanded_link_groups": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "expanded_node_groups": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "link_filter": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          },
+          "node_filter": {
+            "$ref": "#/components/schemas/TopoBoolExpression"
+          }
+        },
+        "type": "object"
+      },
+      "TopoValue": {
+        "properties": {
+          "attribute": {
+            "$ref": "#/components/schemas/TopoAttribute"
+          },
+          "badge": {
+            "$ref": "#/components/schemas/TopoOverlayValue"
+          },
+          "field": {
+            "$ref": "#/components/schemas/TopoField"
+          },
+          "literal": {
+            "$ref": "#/components/schemas/TopoLiteralValue"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TopoOverlayValue"
+          }
+        },
+        "type": "object"
+      },
+      "TopoValueExpression": {
+        "properties": {
+          "left": {
+            "$ref": "#/components/schemas/TopoValue"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "right": {
+            "$ref": "#/components/schemas/TopoValue"
           }
         },
         "type": "object"
@@ -616,16 +959,6 @@
         ],
         "type": "object"
       },
-      "WorkflowId": {
-        "properties": {
-          "id": {
-            "description": "A workflow identifier; these are assigned by the system to a posted workflow.",
-            "format": "int64",
-            "type": "integer"
-          }
-        },
-        "type": "object"
-      },
       "WorkflowIdentifier": {
         "properties": {
           "group": {
@@ -677,6 +1010,9 @@
       "com.nokia.eda.appstore.v1.AppInstaller": {
         "description": "AppInstaller is the Schema for the appinstallers API",
         "properties": {
+          "alarms": {
+            "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstaller_alarms"
+          },
           "apiVersion": {
             "default": "appstore.eda.nokia.com/v1",
             "pattern": "^appstore\\.eda\\.nokia\\.com/v1$",
@@ -685,6 +1021,9 @@
               "ui-pattern-error": "The apiVersion must be set to appstore.eda.nokia.com/v1",
               "ui-visible-if": "false"
             }
+          },
+          "deviations": {
+            "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstaller_deviations"
           },
           "kind": {
             "default": "AppInstaller",
@@ -710,7 +1049,7 @@
                       "type": "string"
                     },
                     "appSettings": {
-                      "description": "AppSettings defines a list of variables and their value. Only variables that are customised need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is.",
+                      "description": "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is.",
                       "format": "json",
                       "title": "App Settings",
                       "type": "object"
@@ -763,6 +1102,12 @@
                 },
                 "title": "Auto Process Requirements",
                 "type": "array"
+              },
+              "dryRun": {
+                "default": false,
+                "description": "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result.",
+                "title": "Dry Run",
+                "type": "boolean"
               },
               "operation": {
                 "description": "Operation is the installing operation.\nCurrently supported are 'install', 'delete'.",
@@ -841,6 +1186,73 @@
         ],
         "type": "object"
       },
+      "com.nokia.eda.appstore.v1.AppInstaller_alarms": {
+        "properties": {
+          "critical": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Critical",
+              "ui-title-key": "alarm_severities.critical"
+            }
+          },
+          "major": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Major",
+              "ui-title-key": "alarm_severities.major"
+            }
+          },
+          "minor": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "minor",
+              "ui-title-key": "alarm_severities.minor"
+            }
+          },
+          "warning": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Warning",
+              "ui-title-key": "alarm_severities.warning"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "ui-order-priority": 40,
+          "ui-title": "Alarms",
+          "ui-title-key": "alarms"
+        }
+      },
+      "com.nokia.eda.appstore.v1.AppInstaller_deviations": {
+        "properties": {
+          "count": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Count",
+              "ui-title-key": "count_column"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "ui-order-priority": 25,
+          "ui-title": "Deviations",
+          "ui-title-key": "deviations"
+        }
+      },
       "com.nokia.eda.appstore.v1.AppInstaller_metadata": {
         "properties": {
           "annotations": {
@@ -885,6 +1297,17 @@
               "ui-title": "Name",
               "ui-title-key": "name"
             }
+          },
+          "namespace": {
+            "default": "eda-system",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "immutable": true,
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace",
+              "ui-visible-if": "false"
+            }
           }
         },
         "required": [
@@ -900,6 +1323,9 @@
       "com.nokia.eda.appstore.v1.Catalog": {
         "description": "Catalog is the Schema for the catalogs API",
         "properties": {
+          "alarms": {
+            "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog_alarms"
+          },
           "apiVersion": {
             "default": "appstore.eda.nokia.com/v1",
             "pattern": "^appstore\\.eda\\.nokia\\.com/v1$",
@@ -908,6 +1334,9 @@
               "ui-pattern-error": "The apiVersion must be set to appstore.eda.nokia.com/v1",
               "ui-visible-if": "false"
             }
+          },
+          "deviations": {
+            "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog_deviations"
           },
           "kind": {
             "default": "Catalog",
@@ -1061,6 +1490,14 @@
               "ui-title-key": "name"
             }
           },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          },
           "transactionId": {
             "format": "uint64",
             "type": "integer",
@@ -1078,6 +1515,73 @@
           "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog_DeletedResourceEntry"
         },
         "type": "array"
+      },
+      "com.nokia.eda.appstore.v1.Catalog_alarms": {
+        "properties": {
+          "critical": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Critical",
+              "ui-title-key": "alarm_severities.critical"
+            }
+          },
+          "major": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Major",
+              "ui-title-key": "alarm_severities.major"
+            }
+          },
+          "minor": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "minor",
+              "ui-title-key": "alarm_severities.minor"
+            }
+          },
+          "warning": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Warning",
+              "ui-title-key": "alarm_severities.warning"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "ui-order-priority": 40,
+          "ui-title": "Alarms",
+          "ui-title-key": "alarms"
+        }
+      },
+      "com.nokia.eda.appstore.v1.Catalog_deviations": {
+        "properties": {
+          "count": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Count",
+              "ui-title-key": "count_column"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "ui-order-priority": 25,
+          "ui-title": "Deviations",
+          "ui-title-key": "deviations"
+        }
       },
       "com.nokia.eda.appstore.v1.Catalog_metadata": {
         "properties": {
@@ -1123,6 +1627,17 @@
               "ui-title": "Name",
               "ui-title-key": "name"
             }
+          },
+          "namespace": {
+            "default": "eda-system",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "immutable": true,
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace",
+              "ui-visible-if": "false"
+            }
           }
         },
         "required": [
@@ -1138,6 +1653,9 @@
       "com.nokia.eda.appstore.v1.Registry": {
         "description": "Registry is the Schema for the registries API",
         "properties": {
+          "alarms": {
+            "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry_alarms"
+          },
           "apiVersion": {
             "default": "appstore.eda.nokia.com/v1",
             "pattern": "^appstore\\.eda\\.nokia\\.com/v1$",
@@ -1146,6 +1664,9 @@
               "ui-pattern-error": "The apiVersion must be set to appstore.eda.nokia.com/v1",
               "ui-visible-if": "false"
             }
+          },
+          "deviations": {
+            "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry_deviations"
           },
           "kind": {
             "default": "Registry",
@@ -1163,12 +1684,12 @@
             "description": "RegistrySpec defines the desired state of a Registry",
             "properties": {
               "authSecretRef": {
-                "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog.",
+                "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry.",
                 "title": "Authentication Secret Reference",
                 "type": "string"
               },
               "mirror": {
-                "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a catalog.",
+                "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry.",
                 "title": "Mirror",
                 "type": "string"
               },
@@ -1184,7 +1705,7 @@
                 "type": "boolean"
               },
               "title": {
-                "description": "Title is an UI-friendly name for the catalog.",
+                "description": "Title is an UI-friendly name for the registry.",
                 "maxLength": 50,
                 "title": "Title",
                 "type": "string"
@@ -1282,6 +1803,14 @@
               "ui-title-key": "name"
             }
           },
+          "namespace": {
+            "type": "string",
+            "x-eda-nokia-com": {
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace"
+            }
+          },
           "transactionId": {
             "format": "uint64",
             "type": "integer",
@@ -1299,6 +1828,73 @@
           "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry_DeletedResourceEntry"
         },
         "type": "array"
+      },
+      "com.nokia.eda.appstore.v1.Registry_alarms": {
+        "properties": {
+          "critical": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Critical",
+              "ui-title-key": "alarm_severities.critical"
+            }
+          },
+          "major": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Major",
+              "ui-title-key": "alarm_severities.major"
+            }
+          },
+          "minor": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "minor",
+              "ui-title-key": "alarm_severities.minor"
+            }
+          },
+          "warning": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Warning",
+              "ui-title-key": "alarm_severities.warning"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "ui-order-priority": 40,
+          "ui-title": "Alarms",
+          "ui-title-key": "alarms"
+        }
+      },
+      "com.nokia.eda.appstore.v1.Registry_deviations": {
+        "properties": {
+          "count": {
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer",
+            "x-eda-nokia-com": {
+              "ui-title": "Count",
+              "ui-title-key": "count_column"
+            }
+          }
+        },
+        "readOnly": true,
+        "type": "object",
+        "x-eda-nokia-com": {
+          "ui-order-priority": 25,
+          "ui-title": "Deviations",
+          "ui-title-key": "deviations"
+        }
       },
       "com.nokia.eda.appstore.v1.Registry_metadata": {
         "properties": {
@@ -1344,6 +1940,17 @@
               "ui-title": "Name",
               "ui-title-key": "name"
             }
+          },
+          "namespace": {
+            "default": "eda-system",
+            "type": "string",
+            "x-eda-nokia-com": {
+              "immutable": true,
+              "ui-order-priority": 20,
+              "ui-title": "Namespace",
+              "ui-title-key": "namespace",
+              "ui-visible-if": "false"
+            }
           }
         },
         "required": [
@@ -1382,6 +1989,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/AppGroup"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppGroup"
+                }
               }
             },
             "description": "OK"
@@ -1410,6 +2022,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceList"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/ResourceList"
                 }
@@ -1455,6 +2072,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/UIResult"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UIResult"
+                }
               }
             },
             "description": "OK"
@@ -1481,7 +2103,38 @@
         "operationId": "deleteAllAppstoreEdaNokiaComV1Catalogs",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "description": "a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the set of CRs deleted based on CR labels",
             "in": "query",
             "name": "label-selector",
             "schema": {
@@ -1493,6 +2146,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.CatalogList"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.CatalogList"
                 }
@@ -1554,6 +2212,15 @@
           {
             "description": "a label selector string to filter the results based on CR labels",
             "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
             "name": "label-selector",
             "schema": {
               "type": "string"
@@ -1564,6 +2231,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.CatalogList"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.CatalogList"
                 }
@@ -1590,6 +2262,30 @@
       "post": {
         "description": "create a non-namespaced Catalog",
         "operationId": "createAppstoreEdaNokiaComV1Catalogs",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1604,6 +2300,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
                 }
@@ -1655,6 +2356,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog_DeletedResources"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog_DeletedResources"
+                }
               }
             },
             "description": "Returns list of deleted resource entries"
@@ -1682,6 +2388,28 @@
         "operationId": "deleteAppstoreEdaNokiaComV1Catalogs",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "description": "name of the Catalog to delete",
             "in": "path",
             "name": "name",
@@ -1695,6 +2423,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/Status"
                 }
@@ -1762,6 +2495,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
+                }
               }
             },
             "description": "OK"
@@ -1786,6 +2524,28 @@
         "operationId": "patchAppstoreEdaNokiaComV1Catalogs",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "in": "path",
             "name": "name",
             "required": true,
@@ -1808,6 +2568,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
                 }
@@ -1835,6 +2600,28 @@
         "operationId": "replaceAppstoreEdaNokiaComV1Catalogs",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "in": "path",
             "name": "name",
             "required": true,
@@ -1857,6 +2644,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Catalog"
                 }
@@ -1927,6 +2719,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/ResourceHistory"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
               }
             },
             "description": "Returns the change history of the specified resource"
@@ -1943,6 +2740,69 @@
           }
         },
         "summary": "Get revision history for the specified non-namespaced Catalog.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/appstore.eda.nokia.com/v1/catalogs/{name}/_targets": {
+      "get": {
+        "operationId": "getTargetsAppstoreEdaNokiaComV1Catalogs",
+        "parameters": [
+          {
+            "description": "name of the Catalog",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              }
+            },
+            "description": "Returns the list of intent targets for the specified Catalog resource."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get intent targets for the specified non-namespaced Catalog.",
         "tags": [
           "apps"
         ]
@@ -2009,6 +2869,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/ResourceTopology"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
               }
             },
             "description": "Returns the topology of the specified resource"
@@ -2028,6 +2893,78 @@
         "tags": [
           "apps"
         ]
+      },
+      "post": {
+        "operationId": "postTopologyAppstoreEdaNokiaComV1Catalogs",
+        "parameters": [
+          {
+            "description": "name of the Catalog to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/K8STopologyRequest"
+              }
+            }
+          },
+          "description": "the details of topology to retrieve",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              }
+            },
+            "description": "Returns the topology of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Retrieve the topology for the specified non-namespaced Catalog.",
+        "tags": [
+          "apps"
+        ]
       }
     },
     "/apps/appstore.eda.nokia.com/v1/registries": {
@@ -2036,7 +2973,38 @@
         "operationId": "deleteAllAppstoreEdaNokiaComV1Registries",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "description": "a label selector string to filter the set of CRs deleted based on CR labels",
+            "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the set of CRs deleted based on CR labels",
             "in": "query",
             "name": "label-selector",
             "schema": {
@@ -2048,6 +3016,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.RegistryList"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.RegistryList"
                 }
@@ -2109,6 +3082,15 @@
           {
             "description": "a label selector string to filter the results based on CR labels",
             "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
             "name": "label-selector",
             "schema": {
               "type": "string"
@@ -2119,6 +3101,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.RegistryList"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.RegistryList"
                 }
@@ -2145,6 +3132,30 @@
       "post": {
         "description": "create a non-namespaced Registry",
         "operationId": "createAppstoreEdaNokiaComV1Registries",
+        "parameters": [
+          {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2159,6 +3170,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
                 }
@@ -2210,6 +3226,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry_DeletedResources"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry_DeletedResources"
+                }
               }
             },
             "description": "Returns list of deleted resource entries"
@@ -2237,6 +3258,28 @@
         "operationId": "deleteAppstoreEdaNokiaComV1Registries",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "description": "name of the Registry to delete",
             "in": "path",
             "name": "name",
@@ -2250,6 +3293,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/Status"
                 }
@@ -2317,6 +3365,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
+                }
               }
             },
             "description": "OK"
@@ -2341,6 +3394,28 @@
         "operationId": "patchAppstoreEdaNokiaComV1Registries",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "in": "path",
             "name": "name",
             "required": true,
@@ -2363,6 +3438,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
                 }
@@ -2390,6 +3470,28 @@
         "operationId": "replaceAppstoreEdaNokiaComV1Registries",
         "parameters": [
           {
+            "description": "The detail level to keep in the transaction log for the transaction resulting from this request.",
+            "in": "query",
+            "name": "detailLevel",
+            "schema": {
+              "default": "standard",
+              "enum": [
+                "standard",
+                "detailed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, prevents the transaction resulting from this request from being bundled with others.",
+            "in": "query",
+            "name": "disableBatching",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
             "in": "path",
             "name": "name",
             "required": true,
@@ -2412,6 +3514,11 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.Registry"
                 }
@@ -2482,6 +3589,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/ResourceHistory"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceHistory"
+                }
               }
             },
             "description": "Returns the change history of the specified resource"
@@ -2498,6 +3610,69 @@
           }
         },
         "summary": "Get revision history for the specified non-namespaced Registry.",
+        "tags": [
+          "apps"
+        ]
+      }
+    },
+    "/apps/appstore.eda.nokia.com/v1/registries/{name}/_targets": {
+      "get": {
+        "operationId": "getTargetsAppstoreEdaNokiaComV1Registries",
+        "parameters": [
+          {
+            "description": "name of the Registry",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentTargets"
+                }
+              }
+            },
+            "description": "Returns the list of intent targets for the specified Registry resource."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Get intent targets for the specified non-namespaced Registry.",
         "tags": [
           "apps"
         ]
@@ -2564,6 +3739,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/ResourceTopology"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
               }
             },
             "description": "Returns the topology of the specified resource"
@@ -2580,6 +3760,78 @@
           }
         },
         "summary": "Get the topology for the specified non-namespaced Registry.",
+        "tags": [
+          "apps"
+        ]
+      },
+      "post": {
+        "operationId": "postTopologyAppstoreEdaNokiaComV1Registries",
+        "parameters": [
+          {
+            "description": "name of the Registry to retrieve",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/K8STopologyRequest"
+              }
+            }
+          },
+          "description": "the details of topology to retrieve",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTopology"
+                }
+              }
+            },
+            "description": "Returns the topology of the specified resource"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Retrieve the topology for the specified non-namespaced Registry.",
         "tags": [
           "apps"
         ]
@@ -2624,6 +3876,15 @@
           {
             "description": "a label selector string to filter the results based on CR labels",
             "in": "query",
+            "name": "labelSelector",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "deprecated": true,
+            "description": "Deprecated: a label selector string to filter the results based on CR labels",
+            "in": "query",
             "name": "label-selector",
             "schema": {
               "type": "string"
@@ -2637,9 +3898,14 @@
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstallerList"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstallerList"
+                }
               }
             },
-            "description": "com.nokia.eda.appstore.v1.AppInstallerList"
+            "description": "OK"
           },
           "default": {
             "content": {
@@ -2675,11 +3941,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkflowId"
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstaller"
+                }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstaller"
                 }
               }
             },
-            "description": "The response for a successful POST workflows request."
+            "description": "Created"
           },
           "default": {
             "content": {
@@ -2767,9 +4038,14 @@
                 "schema": {
                   "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstaller"
                 }
+              },
+              "application/yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.nokia.eda.appstore.v1.AppInstaller"
+                }
               }
             },
-            "description": "com.nokia.eda.appstore.v1.AppInstaller"
+            "description": "OK"
           },
           "default": {
             "content": {
@@ -2806,6 +4082,14 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "items": {
                     "type": "string"
@@ -2859,12 +4143,6 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": {
-                "schema": {
-                  "format": "binary",
-                  "type": "string"
-                }
-              },
               "application/octet-stream": {
                 "schema": {
                   "format": "binary",
@@ -2877,11 +4155,6 @@
           "default": {
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "application/octet-stream": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
                 }
@@ -2914,6 +4187,14 @@
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/WorkflowGetInputsRespElem"
+                  },
+                  "type": "array"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "items": {
                     "$ref": "#/components/schemas/WorkflowGetInputsRespElem"
@@ -2996,12 +4277,33 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "client information for streaming request",
+            "in": "query",
+            "name": "eventclient",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "stream information for streaming request",
+            "in": "query",
+            "name": "stream",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/yaml": {
                 "schema": {
                   "type": "string"
                 }
@@ -3021,6 +4323,41 @@
           }
         },
         "summary": "Read logs output by the AppInstaller.",
+        "tags": [
+          "workflows"
+        ]
+      }
+    },
+    "/workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}/_terminate": {
+      "put": {
+        "operationId": "wfTerminateAppstoreEdaNokiaComV1Appinstallers",
+        "parameters": [
+          {
+            "description": "name of the AppInstaller",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "no data is returned for this response type."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Details of an error in response to an API REST request."
+          }
+        },
+        "summary": "Terminate a AppInstaller workflow.",
         "tags": [
           "workflows"
         ]

@@ -20,6 +20,7 @@ description: |-
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
 - `label_selector` (String) a label selector string to filter the results based on CR labels
+- `labelselector` (String) Deprecated: a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -36,7 +37,9 @@ Optional:
 
 Read-Only:
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--items--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--items--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--items--metadata))
 - `status` (Attributes) (see [below for nested schema](#nestedatt--items--status))
@@ -49,6 +52,8 @@ Optional:
 - `apps` (Attributes List) Apps are the input apps to the installer. (see [below for nested schema](#nestedatt--items--spec--apps))
 - `auto_process_requirements` (List of String) AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.
 Currently only 'strict' is supported.
+- `dry_run` (Boolean) DryRun indicates whether to run the installer without actually applying the manifest to the system.
+The results will be put in a transaction result.
 - `operation` (String) Operation is the installing operation.
 Currently supported are 'install', 'delete'.
 
@@ -58,7 +63,7 @@ Currently supported are 'install', 'delete'.
 Optional:
 
 - `app_id` (String) AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app.
-- `app_settings` (Attributes) AppSettings defines a list of variables and their value. Only variables that are customised need to be mentioned.
+- `app_settings` (Attributes) AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.
 If AppSettings are not again mentioned on upgrade, values will remain as is. (see [below for nested schema](#nestedatt--items--spec--apps--app_settings))
 - `catalog` (String) Catalog of the app to be installed.
 This is where app manifest is retrieved from, along with some other metadata.
@@ -84,6 +89,25 @@ then the commit reference (e.g. git hash) is expected.
 
 
 
+<a id="nestedatt--items--alarms"></a>
+### Nested Schema for `items.alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--items--deviations"></a>
+### Nested Schema for `items.deviations`
+
+Read-Only:
+
+- `count` (Number)
+
+
 <a id="nestedatt--items--metadata"></a>
 ### Nested Schema for `items.metadata`
 
@@ -92,6 +116,7 @@ Read-Only:
 - `annotations` (Map of String)
 - `labels` (Map of String)
 - `name` (String)
+- `namespace` (String)
 
 
 <a id="nestedatt--items--status"></a>

@@ -3,6 +3,22 @@ app_group:
       path: /apps/appstore.eda.nokia.com
       method: GET
 
+intent_targets:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_targets
+      method: GET
+
+k8_s_topology_request:
+  - create:
+      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_topology
+      method: POST
+
 patch:
   - update:
       path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
@@ -116,37 +132,59 @@ com.nokia.eda.appstore.v1.registry_deleted_resources:
       path: /apps/appstore.eda.nokia.com/v1/registries/_deleted
       method: GET
 
-totalPaths: 19
-totalSchemas: 46
-usedSchemas: 17
-unusedSchemas: 29
+totalPaths: 22
+totalSchemas: 70
+usedSchemas: 19
+unusedSchemas: 51
 unusedSchemaList:
   - AppGroupVersion
   - ErrorIndex
   - ErrorItem
   - ErrorResponse
+  - IntentTarget
   - K8SPatchOp
   - OverlayState
   - Resource
   - ResourceHistoryEntry
   - StatusDetails
   - TopoAttrMetadata
+  - TopoAttribute
+  - TopoBoolExpression
+  - TopoBoolLiteral
   - TopoElemMetadata
-  - TopoLinkEndpoint
+  - TopoEndpointBoolExpression
+  - TopoField
+  - TopoFixedBoolExpression
+  - TopoLabelSelector
+  - TopoLiteralStatusOrBadge
+  - TopoLiteralValue
+  - TopoLogicalExpression
   - TopoNodeGrouping
   - TopoOverlayEndpoint
   - TopoOverlayEndpointState
   - TopoOverlayLink
+  - TopoOverlayLinkGroup
+  - TopoOverlayLinkGroupEndpoint
   - TopoOverlayLinkState
   - TopoOverlayNode
+  - TopoOverlayNodeOrGroup
   - TopoOverlayNodeState
+  - TopoOverlayValue
   - TopoSchema
+  - TopoStateFilter
+  - TopoValue
+  - TopoValueExpression
   - Topology
-  - WorkflowId
   - WorkflowIdentifier
   - WorkflowInputDataElem
+  - com.nokia.eda.appstore.v1.AppInstaller_alarms
+  - com.nokia.eda.appstore.v1.AppInstaller_deviations
   - com.nokia.eda.appstore.v1.AppInstaller_metadata
   - com.nokia.eda.appstore.v1.Catalog_DeletedResourceEntry
+  - com.nokia.eda.appstore.v1.Catalog_alarms
+  - com.nokia.eda.appstore.v1.Catalog_deviations
   - com.nokia.eda.appstore.v1.Catalog_metadata
   - com.nokia.eda.appstore.v1.Registry_DeletedResourceEntry
+  - com.nokia.eda.appstore.v1.Registry_alarms
+  - com.nokia.eda.appstore.v1.Registry_deviations
   - com.nokia.eda.appstore.v1.Registry_metadata

@@ -11,41 +11,40 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/nokia/eda/apps/terraform-provider-appstore/internal/eda/apiclient"
-	"github.com/nokia/eda/apps/terraform-provider-appstore/internal/resource_catalog"
+	"github.com/nokia/eda/apps/terraform-provider-appstore/internal/resource_app_installer"
 	"github.com/nokia/eda/apps/terraform-provider-appstore/internal/tfutils"
 )
 
 const (
-	create_rs_catalog = "/apps/appstore.eda.nokia.com/v1/catalogs"
-	read_rs_catalog   = "/apps/appstore.eda.nokia.com/v1/catalogs/{name}"
-	update_rs_catalog = "/apps/appstore.eda.nokia.com/v1/catalogs/{name}"
-	delete_rs_catalog = "/apps/appstore.eda.nokia.com/v1/catalogs/{name}"
+	create_rs_appInstaller = "/workflows/v1/appstore.eda.nokia.com/v1/appinstallers"
+	read_rs_appInstaller   = "/workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}"
+	delete_rs_appInstaller = "/workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}"
 )
 
 var (
-	_ resource.Resource                = (*catalogResource)(nil)
-	_ resource.ResourceWithConfigure   = (*catalogResource)(nil)
-	_ resource.ResourceWithImportState = (*catalogResource)(nil)
+	_ resource.Resource                = (*appInstallerResource)(nil)
+	_ resource.ResourceWithConfigure   = (*appInstallerResource)(nil)
+	_ resource.ResourceWithImportState = (*appInstallerResource)(nil)
 )
 
-func NewCatalogResource() resource.Resource {
-	return &catalogResource{}
+func NewAppInstallerResource() resource.Resource {
+	return &appInstallerResource{}
 }
 
-type catalogResource struct {
+type appInstallerResource struct {
 	client *apiclient.EdaApiClient
 }
 
-func (r *catalogResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_catalog"
+func (r *appInstallerResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_app_installer"
 }
 
-func (r *catalogResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
-	resp.Schema = resource_catalog.CatalogResourceSchema(ctx)
+func (r *appInstallerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = resource_app_installer.AppInstallerResourceSchema(ctx)
 }
 
-func (r *catalogResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data resource_catalog.CatalogModel
+func (r *appInstallerResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data resource_app_installer.AppInstallerModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -70,17 +69,17 @@ func (r *catalogResource) Create(ctx context.Context, req resource.CreateRequest
 
 	// Create API call logic
 	tflog.Info(ctx, "Create()::API request", map[string]any{
-		"path": create_rs_catalog,
+		"path": create_rs_appInstaller,
 		"body": spew.Sdump(reqBody),
 	})
 
 	t0 := time.Now()
 	result := map[string]any{}
 
-	err = r.client.Create(ctx, create_rs_catalog, nil, reqBody, &result)
+	err = r.client.Create(ctx, create_rs_appInstaller, nil, reqBody, &result)
 
 	tflog.Info(ctx, "Create()::API returned", map[string]any{
-		"path":      create_rs_catalog,
+		"path":      create_rs_appInstaller,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -93,12 +92,12 @@ func (r *catalogResource) Create(ctx context.Context, req resource.CreateRequest
 	// Read the resource again to populate any values not available in the response from Create()
 	t0 = time.Now()
 
-	err = r.client.Get(ctx, read_rs_catalog, map[string]string{
+	err = r.client.Get(ctx, read_rs_appInstaller, map[string]string{
 		"name": tfutils.StringValue(data.Metadata.Name),
 	}, &result)
 
 	tflog.Info(ctx, "Read()::API returned", map[string]any{
-		"path":      read_rs_catalog,
+		"path":      read_rs_appInstaller,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -118,8 +117,8 @@ func (r *catalogResource) Create(ctx context.Context, req resource.CreateRequest
 	resp.Diagnostics.Append(resp.State.Set(ctx, data)...)
 }
 
-func (r *catalogResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data resource_catalog.CatalogModel
+func (r *appInstallerResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data resource_app_installer.AppInstallerModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -130,19 +129,19 @@ func (r *catalogResource) Read(ctx context.Context, req resource.ReadRequest, re
 
 	// Read API call logic
 	tflog.Info(ctx, "Read()::API request", map[string]any{
-		"path": read_rs_catalog,
+		"path": read_rs_appInstaller,
 		"data": spew.Sdump(data),
 	})
 
 	t0 := time.Now()
 	result := map[string]any{}
 
-	err := r.client.Get(ctx, read_rs_catalog, map[string]string{
+	err := r.client.Get(ctx, read_rs_appInstaller, map[string]string{
 		"name": tfutils.StringValue(data.Metadata.Name),
 	}, &result)
 
 	tflog.Info(ctx, "Read()::API returned", map[string]any{
-		"path":      read_rs_catalog,
+		"path":      read_rs_appInstaller,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -163,83 +162,13 @@ func (r *catalogResource) Read(ctx context.Context, req resource.ReadRequest, re
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *catalogResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data resource_catalog.CatalogModel
-
-	// Read Terraform plan data into the model
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	err := tfutils.FillMissingValues(ctx, &data)
-	if err != nil {
-		resp.Diagnostics.AddError("Error filling missing values", err.Error())
-		return
-	}
-
-	reqBody, err := tfutils.ModelToAnyMap(ctx, &data)
-	if err != nil {
-		resp.Diagnostics.AddError("Error building request", err.Error())
-		return
-	}
-
-	// Update API call logic
-	tflog.Info(ctx, "Update()::API request", map[string]any{
-		"path": update_rs_catalog,
-		"body": spew.Sdump(reqBody),
-	})
-
-	t0 := time.Now()
-	result := map[string]any{}
-
-	err = r.client.Update(ctx, update_rs_catalog, map[string]string{
-		"name": tfutils.StringValue(data.Metadata.Name),
-	}, reqBody, &result)
-
-	tflog.Info(ctx, "Update()::API returned", map[string]any{
-		"path":      update_rs_catalog,
-		"result":    spew.Sdump(result),
-		"timeTaken": time.Since(t0).String(),
-	})
-
-	if err != nil {
-		resp.Diagnostics.AddError("Error updating resource", err.Error())
-		return
-	}
-
-	// Read the resource again to populate any values not available in the response from Update()
-	t0 = time.Now()
-
-	err = r.client.Get(ctx, read_rs_catalog, map[string]string{
-		"name": tfutils.StringValue(data.Metadata.Name),
-	}, &result)
-
-	tflog.Info(ctx, "Read()::API returned", map[string]any{
-		"path":      read_rs_catalog,
-		"result":    spew.Sdump(result),
-		"timeTaken": time.Since(t0).String(),
-	})
-
-	if err != nil {
-		resp.Diagnostics.AddError("Error reading resource", err.Error())
-		return
-	}
-
-	// Convert API response to Terraform model
-	err = tfutils.AnyMapToModel(ctx, result, &data)
-	if err != nil {
-		resp.Diagnostics.AddError("Failed to build response from API result", err.Error())
-		return
-	}
-
-	// Save updated data into Terraform state
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+func (r *appInstallerResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	// Update not supported for this resource
+	resp.Diagnostics.AddError("Update not supported", "This resource does not support update operation.")
 }
 
-func (r *catalogResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data resource_catalog.CatalogModel
+func (r *appInstallerResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data resource_app_installer.AppInstallerModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -250,19 +179,19 @@ func (r *catalogResource) Delete(ctx context.Context, req resource.DeleteRequest
 
 	// Delete API call logic
 	tflog.Info(ctx, "Delete()::API request", map[string]any{
-		"path": delete_rs_catalog,
+		"path": delete_rs_appInstaller,
 		"data": spew.Sdump(data),
 	})
 
 	t0 := time.Now()
 	result := map[string]any{}
 
-	err := r.client.Delete(ctx, delete_rs_catalog, map[string]string{
+	err := r.client.Delete(ctx, delete_rs_appInstaller, map[string]string{
 		"name": tfutils.StringValue(data.Metadata.Name),
 	}, &result)
 
 	tflog.Info(ctx, "Delete()::API returned", map[string]any{
-		"path":      delete_rs_catalog,
+		"path":      delete_rs_appInstaller,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -274,7 +203,7 @@ func (r *catalogResource) Delete(ctx context.Context, req resource.DeleteRequest
 }
 
 // Configure adds the provider configured client to the resource.
-func (r *catalogResource) Configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *appInstallerResource) Configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	// Add a nil check when handling ProviderData because Terraform
 	// sets that data after it calls the ConfigureProvider RPC.
 	if req.ProviderData == nil {
@@ -294,7 +223,7 @@ func (r *catalogResource) Configure(_ context.Context, req resource.ConfigureReq
 }
 
 // ImportState implements resource.ResourceWithImportState.
-func (r *catalogResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *appInstallerResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	parts := strings.Split(req.ID, "/")
 	if len(parts) < 1 {
 		resp.Diagnostics.AddError("Invalid ID", fmt.Sprintf("Expected format: id = <name>, got: id = %s", req.ID))
