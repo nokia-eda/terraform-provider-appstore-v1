@@ -8,7 +8,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/appstore.eda.nokia.com/v1/catalogs/_deleted,GET,com.nokia.eda.appstore.v1.Catalog_DeletedResources,,false,false,false
 /apps/appstore.eda.nokia.com/v1/catalogs/{name},DELETE,Status,catalog,true,false,true
 /apps/appstore.eda.nokia.com/v1/catalogs/{name},GET,com.nokia.eda.appstore.v1.Catalog,catalog,true,true,true
-/apps/appstore.eda.nokia.com/v1/catalogs/{name},PATCH,Patch,,false,false,false
+/apps/appstore.eda.nokia.com/v1/catalogs/{name},PATCH,com.nokia.eda.appstore.v1.Catalog,,false,false,false
 /apps/appstore.eda.nokia.com/v1/catalogs/{name},PUT,com.nokia.eda.appstore.v1.Catalog,catalog,true,false,true
 /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -20,7 +20,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/appstore.eda.nokia.com/v1/registries/_deleted,GET,com.nokia.eda.appstore.v1.Registry_DeletedResources,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries/{name},DELETE,Status,registry,true,false,true
 /apps/appstore.eda.nokia.com/v1/registries/{name},GET,com.nokia.eda.appstore.v1.Registry,registry,true,true,true
-/apps/appstore.eda.nokia.com/v1/registries/{name},PATCH,Patch,,false,false,false
+/apps/appstore.eda.nokia.com/v1/registries/{name},PATCH,com.nokia.eda.appstore.v1.Registry,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries/{name},PUT,com.nokia.eda.appstore.v1.Registry,registry,true,false,true
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_targets,GET,IntentTargets,,false,false,false
