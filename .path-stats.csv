@@ -12,6 +12,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/appstore.eda.nokia.com/v1/catalogs/{name},PUT,com.nokia.eda.appstore.v1.Catalog,catalog,true,false,true
 /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_targets,GET,IntentTargets,,false,false,false
+/apps/appstore.eda.nokia.com/v1/catalogs/{name}/_topology,GET,ResourceTopology,,false,false,false
 /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_topology,POST,K8STopologyRequest,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries,DELETE,com.nokia.eda.appstore.v1.RegistryList,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries,GET,com.nokia.eda.appstore.v1.RegistryList,registry_list,true,true,false
@@ -23,6 +24,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/appstore.eda.nokia.com/v1/registries/{name},PUT,com.nokia.eda.appstore.v1.Registry,registry,true,false,true
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_targets,GET,IntentTargets,,false,false,false
+/apps/appstore.eda.nokia.com/v1/registries/{name}/_topology,GET,ResourceTopology,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_topology,POST,K8STopologyRequest,,false,false,false
 /workflows/v1/appstore.eda.nokia.com/v1/appinstallers,GET,com.nokia.eda.appstore.v1.AppInstallerList,app_installer_list,true,true,false
 /workflows/v1/appstore.eda.nokia.com/v1/appinstallers,POST,com.nokia.eda.appstore.v1.AppInstaller,app_installer,true,false,true

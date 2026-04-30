@@ -156,15 +156,14 @@ func AppInstallerResourceSchema(ctx context.Context) schema.Schema {
 												stringvalidator.OneOf(
 													"semver",
 													"commit",
-													"alias",
 												),
 											},
 											Default: stringdefault.StaticString("semver"),
 										},
 										"value": schema.StringAttribute{
 											Required:            true,
-											Description:         "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected",
-											MarkdownDescription: "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected",
+											Description:         "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.",
+											MarkdownDescription: "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.",
 										},
 									},
 									CustomType: VersionType{

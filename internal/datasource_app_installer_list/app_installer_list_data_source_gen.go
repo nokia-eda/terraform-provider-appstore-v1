@@ -136,8 +136,8 @@ func AppInstallerListDataSourceSchema(ctx context.Context) schema.Schema {
 													},
 													"value": schema.StringAttribute{
 														Optional:            true,
-														Description:         "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected",
-														MarkdownDescription: "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected",
+														Description:         "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.",
+														MarkdownDescription: "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.",
 													},
 												},
 												CustomType: VersionType{
@@ -220,8 +220,8 @@ func AppInstallerListDataSourceSchema(ctx context.Context) schema.Schema {
 			"label_selector": schema.StringAttribute{
 				Optional:            true,
 				Computed:            true,
-				Description:         "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
-				MarkdownDescription: "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
+				Description:         "a label selector string to filter the results based on CR labels",
+				MarkdownDescription: "a label selector string to filter the results based on CR labels",
 			},
 			"labelselector": schema.StringAttribute{
 				Optional:            true,

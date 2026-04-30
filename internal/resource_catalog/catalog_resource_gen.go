@@ -135,13 +135,6 @@ func CatalogResourceSchema(ctx context.Context) schema.Schema {
 							stringvalidator.LengthAtMost(70),
 						},
 					},
-					"enabled": schema.BoolAttribute{
-						Optional:            true,
-						Computed:            true,
-						Description:         "Enable or disable the catalog in EDA Store",
-						MarkdownDescription: "Enable or disable the catalog in EDA Store",
-						Default:             booldefault.StaticBool(true),
-					},
 					"refresh_interval": schema.Int64Attribute{
 						Optional:            true,
 						Computed:            true,
@@ -1663,24 +1656,6 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 			fmt.Sprintf(`description expected to be basetypes.StringValue, was: %T`, descriptionAttribute))
 	}
 
-	enabledAttribute, ok := attributes["enabled"]
-
-	if !ok {
-		diags.AddError(
-			"Attribute Missing",
-			`enabled is missing from object`)
-
-		return nil, diags
-	}
-
-	enabledVal, ok := enabledAttribute.(basetypes.BoolValue)
-
-	if !ok {
-		diags.AddError(
-			"Attribute Wrong Type",
-			fmt.Sprintf(`enabled expected to be basetypes.BoolValue, was: %T`, enabledAttribute))
-	}
-
 	refreshIntervalAttribute, ok := attributes["refresh_interval"]
 
 	if !ok {
@@ -1778,7 +1753,6 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 	return SpecValue{
 		AuthSecretRef:   authSecretRefVal,
 		Description:     descriptionVal,
-		Enabled:         enabledVal,
 		RefreshInterval: refreshIntervalVal,
 		RemoteType:      remoteTypeVal,
 		RemoteUrl:       remoteUrlVal,
@@ -1887,24 +1861,6 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 			fmt.Sprintf(`description expected to be basetypes.StringValue, was: %T`, descriptionAttribute))
 	}
 
-	enabledAttribute, ok := attributes["enabled"]
-
-	if !ok {
-		diags.AddError(
-			"Attribute Missing",
-			`enabled is missing from object`)
-
-		return NewSpecValueUnknown(), diags
-	}
-
-	enabledVal, ok := enabledAttribute.(basetypes.BoolValue)
-
-	if !ok {
-		diags.AddError(
-			"Attribute Wrong Type",
-			fmt.Sprintf(`enabled expected to be basetypes.BoolValue, was: %T`, enabledAttribute))
-	}
-
 	refreshIntervalAttribute, ok := attributes["refresh_interval"]
 
 	if !ok {
@@ -2002,7 +1958,6 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 	return SpecValue{
 		AuthSecretRef:   authSecretRefVal,
 		Description:     descriptionVal,
-		Enabled:         enabledVal,
 		RefreshInterval: refreshIntervalVal,
 		RemoteType:      remoteTypeVal,
 		RemoteUrl:       remoteUrlVal,
@@ -2082,7 +2037,6 @@ var _ basetypes.ObjectValuable = SpecValue{}
 type SpecValue struct {
 	AuthSecretRef   basetypes.StringValue `tfsdk:"auth_secret_ref"`
 	Description     basetypes.StringValue `tfsdk:"description"`
-	Enabled         basetypes.BoolValue   `tfsdk:"enabled"`
 	RefreshInterval basetypes.Int64Value  `tfsdk:"refresh_interval"`
 	RemoteType      basetypes.StringValue `tfsdk:"remote_type"`
 	RemoteUrl       basetypes.StringValue `tfsdk:"remote_url"`
@@ -2092,14 +2046,13 @@ type SpecValue struct {
 }
 
 func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
-	attrTypes := make(map[string]tftypes.Type, 8)
+	attrTypes := make(map[string]tftypes.Type, 7)
 
 	var val tftypes.Value
 	var err error
 
 	attrTypes["auth_secret_ref"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["description"] = basetypes.StringType{}.TerraformType(ctx)
-	attrTypes["enabled"] = basetypes.BoolType{}.TerraformType(ctx)
 	attrTypes["refresh_interval"] = basetypes.Int64Type{}.TerraformType(ctx)
 	attrTypes["remote_type"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["remote_url"] = basetypes.StringType{}.TerraformType(ctx)
@@ -2110,7 +2063,7 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 
 	switch v.state {
 	case attr.ValueStateKnown:
-		vals := make(map[string]tftypes.Value, 8)
+		vals := make(map[string]tftypes.Value, 7)
 
 		val, err = v.AuthSecretRef.ToTerraformValue(ctx)
 
@@ -2127,14 +2080,6 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 		}
 
 		vals["description"] = val
-
-		val, err = v.Enabled.ToTerraformValue(ctx)
-
-		if err != nil {
-			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
-		}
-
-		vals["enabled"] = val
 
 		val, err = v.RefreshInterval.ToTerraformValue(ctx)
 
@@ -2208,7 +2153,6 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 	attributeTypes := map[string]attr.Type{
 		"auth_secret_ref":  basetypes.StringType{},
 		"description":      basetypes.StringType{},
-		"enabled":          basetypes.BoolType{},
 		"refresh_interval": basetypes.Int64Type{},
 		"remote_type":      basetypes.StringType{},
 		"remote_url":       basetypes.StringType{},
@@ -2229,7 +2173,6 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 		map[string]attr.Value{
 			"auth_secret_ref":  v.AuthSecretRef,
 			"description":      v.Description,
-			"enabled":          v.Enabled,
 			"refresh_interval": v.RefreshInterval,
 			"remote_type":      v.RemoteType,
 			"remote_url":       v.RemoteUrl,
@@ -2260,10 +2203,6 @@ func (v SpecValue) Equal(o attr.Value) bool {
 	}
 
 	if !v.Description.Equal(other.Description) {
-		return false
-	}
-
-	if !v.Enabled.Equal(other.Enabled) {
 		return false
 	}
 
@@ -2302,7 +2241,6 @@ func (v SpecValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
 		"auth_secret_ref":  basetypes.StringType{},
 		"description":      basetypes.StringType{},
-		"enabled":          basetypes.BoolType{},
 		"refresh_interval": basetypes.Int64Type{},
 		"remote_type":      basetypes.StringType{},
 		"remote_url":       basetypes.StringType{},

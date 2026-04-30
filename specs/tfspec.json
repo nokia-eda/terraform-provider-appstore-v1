@@ -222,7 +222,7 @@
                                                                 "name": "value",
                                                                 "string": {
                                                                     "computed_optional_required": "optional",
-                                                                    "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected"
+                                                                    "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected."
                                                                 }
                                                             }
                                                         ],
@@ -313,7 +313,7 @@
                         "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
-                            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned."
+                            "description": "a label selector string to filter the results based on CR labels"
                         }
                     },
                     {
@@ -479,7 +479,7 @@
                                                                                 "name": "value",
                                                                                 "string": {
                                                                                     "computed_optional_required": "optional",
-                                                                                    "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected"
+                                                                                    "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected."
                                                                                 }
                                                                             }
                                                                         ],
@@ -692,13 +692,6 @@
                                     }
                                 },
                                 {
-                                    "name": "enabled",
-                                    "bool": {
-                                        "computed_optional_required": "optional",
-                                        "description": "Enable or disable the catalog in EDA Store"
-                                    }
-                                },
-                                {
                                     "name": "refresh_interval",
                                     "int64": {
                                         "computed_optional_required": "optional",
@@ -792,7 +785,7 @@
                         "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
-                            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned."
+                            "description": "a label selector string to filter the results based on CR labels"
                         }
                     },
                     {
@@ -927,13 +920,6 @@
                                                     "string": {
                                                         "computed_optional_required": "optional",
                                                         "description": "Description is an optional short description of the catalog."
-                                                    }
-                                                },
-                                                {
-                                                    "name": "enabled",
-                                                    "bool": {
-                                                        "computed_optional_required": "optional",
-                                                        "description": "Enable or disable the catalog in EDA Store"
                                                     }
                                                 },
                                                 {
@@ -1224,7 +1210,7 @@
                         "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
-                            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned."
+                            "description": "a label selector string to filter the results based on CR labels"
                         }
                     },
                     {
@@ -1781,7 +1767,7 @@
                                                                                         "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
                                                                                     }
                                                                                 ],
-                                                                                "schema_definition": "stringvalidator.OneOf(\n\"semver\",\n\"commit\",\n\"alias\",\n)"
+                                                                                "schema_definition": "stringvalidator.OneOf(\n\"semver\",\n\"commit\",\n)"
                                                                             }
                                                                         }
                                                                     ]
@@ -1791,7 +1777,7 @@
                                                                 "name": "value",
                                                                 "string": {
                                                                     "computed_optional_required": "required",
-                                                                    "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected"
+                                                                    "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected."
                                                                 }
                                                             }
                                                         ],
@@ -2075,16 +2061,6 @@
                                                 }
                                             }
                                         ]
-                                    }
-                                },
-                                {
-                                    "name": "enabled",
-                                    "bool": {
-                                        "computed_optional_required": "computed_optional",
-                                        "default": {
-                                            "static": true
-                                        },
-                                        "description": "Enable or disable the catalog in EDA Store"
                                     }
                                 },
                                 {
