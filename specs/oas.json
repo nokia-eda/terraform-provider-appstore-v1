@@ -35,40 +35,19 @@
         },
         "type": "object"
       },
-      "ErrorIndex": {
-        "properties": {
-          "index": {
-            "format": "int64",
-            "type": "integer"
-          }
-        },
-        "title": "Wrapper for index information inside an error.",
-        "type": "object"
-      },
-      "ErrorItem": {
-        "properties": {
-          "error": {
-            "type": "object"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
       "ErrorResponse": {
         "properties": {
           "causeCollection": {
             "description": "A lower-level set of structured errors.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
             "items": {
-              "$ref": "#/components/schemas/ErrorResponse"
+              "type": "object"
             },
             "type": "array"
           },
           "causeIndexedCollection": {
             "description": "A lower-level set of structured errors.\nEach of these errors MUST have index set.\n\nOnly oneOf `causeWrapped`, `causeSimple`, `causeCollection`, or `causeIndexedCollection` will ever be set.",
             "items": {
-              "$ref": "#/components/schemas/ErrorResponse"
+              "type": "object"
             },
             "type": "array"
           },
@@ -81,43 +60,14 @@
             "type": "string"
           },
           "causeWrapped": {
-            "$ref": "#/components/schemas/ErrorResponse"
-          },
-          "code": {
-            "deprecated": true,
-            "description": "the numeric HTTP error code for the response.\n\nDeprecated: Prefer to check the request's HTTP response code directly.",
-            "format": "int64",
-            "type": "integer"
-          },
-          "details": {
-            "deprecated": true,
-            "description": "The optional details of the error response.\nDeprecated: Replaced by `causeSimple`.",
-            "type": "string"
-          },
-          "dictionary": {
-            "additionalProperties": true,
-            "deprecated": true,
-            "description": "Dictionary/map of associated data/information relevant to the error.\nThe error \"message\" may contain {{name}} escapes that should be substituted\nwith information from this dictionary.\n\nDeprecated: Use \"values\" instead.",
             "type": "object"
           },
           "domain": {
             "description": "The \"domain\" for the error.  If empty, it is an EDA\ncore error.  Alternatively it can be an EDA application\n\"apiVersion\" value (e.g. interfaces.eda.nokia.com/v1alpha1)\nindicating that the error is specific to that application.\nThe domain gives the receiver information that they can use\nto help them interpret the \"type\" field.",
             "type": "string"
           },
-          "errors": {
-            "deprecated": true,
-            "description": "Collection of errors in cases where more than one exists.\nThis needs to be flexible so we can support multiple formats.\nDeprecated: Replaced by `causeCollection` or `causeIndexedCollection` instead.",
-            "items": {
-              "$ref": "#/components/schemas/ErrorItem"
-            },
-            "type": "array"
-          },
           "index": {
-            "$ref": "#/components/schemas/ErrorIndex"
-          },
-          "internal": {
-            "deprecated": true,
-            "description": "Internal error code number.\n\nDeprecated: \"type\" \u0026 \"domain\" should be used instead to uniquely identify this error.",
+            "description": "When processing an array, errors may be generated related to a particular array item.\nIf set, this index indicates to which array item the error applies.",
             "format": "int64",
             "type": "integer"
           },
@@ -142,7 +92,6 @@
           }
         },
         "required": [
-          "internal",
           "message",
           "type"
         ],
@@ -441,7 +390,7 @@
             "$ref": "#/components/schemas/TopoLogicalExpression"
           },
           "not": {
-            "$ref": "#/components/schemas/TopoBoolExpression"
+            "type": "object"
           },
           "value_expression": {
             "$ref": "#/components/schemas/TopoValueExpression"
@@ -568,6 +517,9 @@
             "type": "string"
           },
           "group_key": {
+            "type": "string"
+          },
+          "group_ui_name": {
             "type": "string"
           },
           "tier": {
@@ -1103,13 +1055,14 @@
                           "description": "The version type of the App. Currently supported: semver, commit.\nDefault is semver.",
                           "enum": [
                             "semver",
-                            "commit"
+                            "commit",
+                            "alias"
                           ],
                           "title": "Type",
                           "type": "string"
                         },
                         "value": {
-                          "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.",
+                          "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected",
                           "title": "Value",
                           "type": "string"
                         }
@@ -1284,7 +1237,7 @@
         "readOnly": true,
         "type": "object",
         "x-eda-nokia-com": {
-          "ui-order-priority": 25,
+          "ui-order-priority": 50,
           "ui-title": "Deviations",
           "ui-title-key": "deviations"
         }
@@ -1399,6 +1352,12 @@
                 "maxLength": 70,
                 "title": "Description",
                 "type": "string"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable or disable the catalog in EDA Store",
+                "title": "Enabled",
+                "type": "boolean"
               },
               "refreshInterval": {
                 "default": 180,
@@ -1614,7 +1573,7 @@
         "readOnly": true,
         "type": "object",
         "x-eda-nokia-com": {
-          "ui-order-priority": 25,
+          "ui-order-priority": 50,
           "ui-title": "Deviations",
           "ui-title-key": "deviations"
         }
@@ -1927,7 +1886,7 @@
         "readOnly": true,
         "type": "object",
         "x-eda-nokia-com": {
-          "ui-order-priority": 25,
+          "ui-order-priority": 50,
           "ui-title": "Deviations",
           "ui-title-key": "deviations"
         }
@@ -2246,7 +2205,7 @@
             }
           },
           {
-            "description": "a label selector string to filter the results based on CR labels",
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
             "in": "query",
             "name": "labelSelector",
             "schema": {
@@ -2845,91 +2804,6 @@
       }
     },
     "/apps/appstore.eda.nokia.com/v1/catalogs/{name}/_topology": {
-      "get": {
-        "operationId": "getTopologyAppstoreEdaNokiaComV1Catalogs",
-        "parameters": [
-          {
-            "description": "name of the Catalog to retrieve",
-            "in": "path",
-            "name": "name",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "the type of topology to retrieve",
-            "in": "query",
-            "name": "type",
-            "schema": {
-              "default": "childrenAndParents",
-              "enum": [
-                "children",
-                "parents",
-                "childrenAndParents",
-                "dependentCrs"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "whether to recursively build the topology to include all layers or just a single layer of the topology",
-            "in": "query",
-            "name": "recurse",
-            "schema": {
-              "default": true,
-              "type": "boolean"
-            }
-          },
-          {
-            "description": "client information for streaming request",
-            "in": "query",
-            "name": "eventclient",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "stream information for streaming request",
-            "in": "query",
-            "name": "stream",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResourceTopology"
-                }
-              },
-              "application/yaml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResourceTopology"
-                }
-              }
-            },
-            "description": "Returns the topology of the specified resource"
-          },
-          "default": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description": "Details of an error in response to an API REST request."
-          }
-        },
-        "summary": "Get the topology for the specified non-namespaced Catalog.",
-        "tags": [
-          "apps"
-        ]
-      },
       "post": {
         "operationId": "postTopologyAppstoreEdaNokiaComV1Catalogs",
         "parameters": [
@@ -3116,7 +2990,7 @@
             }
           },
           {
-            "description": "a label selector string to filter the results based on CR labels",
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
             "in": "query",
             "name": "labelSelector",
             "schema": {
@@ -3715,91 +3589,6 @@
       }
     },
     "/apps/appstore.eda.nokia.com/v1/registries/{name}/_topology": {
-      "get": {
-        "operationId": "getTopologyAppstoreEdaNokiaComV1Registries",
-        "parameters": [
-          {
-            "description": "name of the Registry to retrieve",
-            "in": "path",
-            "name": "name",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "the type of topology to retrieve",
-            "in": "query",
-            "name": "type",
-            "schema": {
-              "default": "childrenAndParents",
-              "enum": [
-                "children",
-                "parents",
-                "childrenAndParents",
-                "dependentCrs"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "whether to recursively build the topology to include all layers or just a single layer of the topology",
-            "in": "query",
-            "name": "recurse",
-            "schema": {
-              "default": true,
-              "type": "boolean"
-            }
-          },
-          {
-            "description": "client information for streaming request",
-            "in": "query",
-            "name": "eventclient",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "stream information for streaming request",
-            "in": "query",
-            "name": "stream",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResourceTopology"
-                }
-              },
-              "application/yaml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResourceTopology"
-                }
-              }
-            },
-            "description": "Returns the topology of the specified resource"
-          },
-          "default": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description": "Details of an error in response to an API REST request."
-          }
-        },
-        "summary": "Get the topology for the specified non-namespaced Registry.",
-        "tags": [
-          "apps"
-        ]
-      },
       "post": {
         "operationId": "postTopologyAppstoreEdaNokiaComV1Registries",
         "parameters": [
@@ -3910,7 +3699,7 @@
             }
           },
           {
-            "description": "a label selector string to filter the results based on CR labels",
+            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.",
             "in": "query",
             "name": "labelSelector",
             "schema": {
