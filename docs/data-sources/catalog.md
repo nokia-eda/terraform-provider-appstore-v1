@@ -41,6 +41,7 @@ Optional:
 - `auth_secret_ref` (String) AuthSecretRef is the authentication secret reference, used for authentication.
 Must be in the same namespace as the catalog.
 - `description` (String) Description is an optional short description of the catalog.
+- `enabled` (Boolean) Enable or disable the catalog in EDA Store
 - `refresh_interval` (Number) RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.
 Default is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments.
 - `remote_type` (String) RemoteType type of the catalog, only 'git' is supported at the moment.

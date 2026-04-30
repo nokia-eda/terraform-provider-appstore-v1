@@ -32,14 +32,6 @@ resource_list:
       path: /apps/appstore.eda.nokia.com/v1
       method: GET
 
-resource_topology:
-  - read:
-      path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_topology
-      method: GET
-  - read:
-      path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_topology
-      method: GET
-
 status:
   - delete:
       path: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
@@ -131,13 +123,11 @@ com.nokia.eda.appstore.v1.registry_deleted_resources:
       method: GET
 
 totalPaths: 22
-totalSchemas: 70
-usedSchemas: 18
-unusedSchemas: 52
+totalSchemas: 68
+usedSchemas: 17
+unusedSchemas: 51
 unusedSchemaList:
   - AppGroupVersion
-  - ErrorIndex
-  - ErrorItem
   - ErrorResponse
   - IntentTarget
   - K8SPatchOp
@@ -145,6 +135,7 @@ unusedSchemaList:
   - Patch
   - Resource
   - ResourceHistoryEntry
+  - ResourceTopology
   - StatusDetails
   - TopoAttrMetadata
   - TopoAttribute

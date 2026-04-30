@@ -73,6 +73,8 @@ If the VersionType is set to semver,
 then the semantic version of the git tag in the form of "apps/<appname>/<semver>" is used.
 If the VersionType is set to commit,
 then the commit reference (e.g. git hash) is expected.
+If the VersionType is set to alias,
+then one of [latest, latestMinor, latestMaintenance] is expected
 
 
 

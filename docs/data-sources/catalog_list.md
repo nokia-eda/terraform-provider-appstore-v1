@@ -19,7 +19,7 @@ description: |-
 
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
-- `label_selector` (String) a label selector string to filter the results based on CR labels
+- `label_selector` (String) A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned.
 - `labelselector` (String) Deprecated: a label selector string to filter the results based on CR labels
 
 ### Read-Only
@@ -52,6 +52,7 @@ Optional:
 - `auth_secret_ref` (String) AuthSecretRef is the authentication secret reference, used for authentication.
 Must be in the same namespace as the catalog.
 - `description` (String) Description is an optional short description of the catalog.
+- `enabled` (Boolean) Enable or disable the catalog in EDA Store
 - `refresh_interval` (Number) RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.
 Default is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments.
 - `remote_type` (String) RemoteType type of the catalog, only 'git' is supported at the moment.
