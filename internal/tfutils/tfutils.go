@@ -65,6 +65,7 @@ var (
 		"safi":  "SAFI",
 		"spf":   "SPF",
 		"tls":   "TLS",
+		"tpi":   "TPI",
 		"ui":    "UI",
 		"uri":   "URI",
 		"url":   "URL",

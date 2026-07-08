@@ -1,0 +1,53 @@
+datasources:
+  - model_name: app_group
+    oas_endpoint: /apps/appstore.eda.nokia.com
+    oas_schema: AppGroup
+  - model_name: resource_list
+    oas_endpoint: /apps/appstore.eda.nokia.com/v1
+    oas_schema: ResourceList
+  - model_name: catalog_list
+    oas_endpoint: /apps/appstore.eda.nokia.com/v1/catalogs
+    oas_schema: com.nokia.eda.appstore.v1.CatalogList
+  - model_name: catalog
+    oas_endpoint: /apps/appstore.eda.nokia.com/v1/catalogs/{name}
+    oas_schema: com.nokia.eda.appstore.v1.Catalog
+  - model_name: registry_list
+    oas_endpoint: /apps/appstore.eda.nokia.com/v1/registries
+    oas_schema: com.nokia.eda.appstore.v1.RegistryList
+  - model_name: registry
+    oas_endpoint: /apps/appstore.eda.nokia.com/v1/registries/{name}
+    oas_schema: com.nokia.eda.appstore.v1.Registry
+  - model_name: app_installer_list
+    oas_endpoint: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers
+    oas_schema: com.nokia.eda.appstore.v1.AppInstallerList
+  - model_name: app_installer
+    oas_endpoint: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}
+    oas_schema: com.nokia.eda.appstore.v1.AppInstaller
+  - model_name: workflow_get_inputs_resp_elem
+    oas_endpoint: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}/_input
+    oas_schema: WorkflowGetInputsRespElem
+
+resources:
+  - model_name: catalog
+    oas_endpoint: /apps/appstore.eda.nokia.com/v1/catalogs
+    oas_schema: com.nokia.eda.appstore.v1.Catalog
+  - model_name: registry
+    oas_endpoint: /apps/appstore.eda.nokia.com/v1/registries
+    oas_schema: com.nokia.eda.appstore.v1.Registry
+  - model_name: app_installer
+    oas_endpoint: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers
+    oas_schema: com.nokia.eda.appstore.v1.AppInstaller
+
+qualified:
+  datasources:
+    - oas_schema: IntentTargets
+      get: /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_targets
+    - oas_schema: ResourceHistory
+      get: /apps/appstore.eda.nokia.com/v1/catalogs/{name}/_revs
+    - oas_schema: UIResult
+      get: /apps/appstore.eda.nokia.com/v1/_ui/{pathname}
+    - oas_schema: com.nokia.eda.appstore.v1.Catalog_DeletedResources
+      get: /apps/appstore.eda.nokia.com/v1/catalogs/_deleted
+    - oas_schema: com.nokia.eda.appstore.v1.Registry_DeletedResources
+      get: /apps/appstore.eda.nokia.com/v1/registries/_deleted
+  resources:
