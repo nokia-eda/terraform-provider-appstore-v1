@@ -31,10 +31,6 @@ description: |-
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
-Optional:
-
-- `spec` (Attributes) CatalogSpec defines the desired state of a Catalog. (see [below for nested schema](#nestedatt--items--spec))
-
 Read-Only:
 
 - `alarms` (Attributes) (see [below for nested schema](#nestedatt--items--alarms))
@@ -42,25 +38,8 @@ Read-Only:
 - `deviations` (Attributes) (see [below for nested schema](#nestedatt--items--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--items--metadata))
+- `spec` (Attributes) CatalogSpec defines the desired state of a Catalog. (see [below for nested schema](#nestedatt--items--spec))
 - `status` (Attributes) CatalogStatus defines the observed state of a Catalog. (see [below for nested schema](#nestedatt--items--status))
-
-<a id="nestedatt--items--spec"></a>
-### Nested Schema for `items.spec`
-
-Optional:
-
-- `auth_secret_ref` (String) AuthSecretRef is the authentication secret reference, used for authentication.
-Must be in the same namespace as the catalog.
-- `description` (String) Description is an optional short description of the catalog.
-- `enabled` (Boolean) Enable or disable the catalog in EDA Store
-- `refresh_interval` (Number) RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.
-Default is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments.
-- `remote_type` (String) RemoteType type of the catalog, only 'git' is supported at the moment.
-- `remote_url` (String) RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.
-Default is HTTPS if no scheme is given.
-- `skip_tls_verify` (Boolean) SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure.
-- `title` (String) Title is an UI-friendly name for the catalog.
-
 
 <a id="nestedatt--items--alarms"></a>
 ### Nested Schema for `items.alarms`
@@ -90,6 +69,24 @@ Read-Only:
 - `labels` (Map of String)
 - `name` (String)
 - `namespace` (String)
+
+
+<a id="nestedatt--items--spec"></a>
+### Nested Schema for `items.spec`
+
+Read-Only:
+
+- `auth_secret_ref` (String) AuthSecretRef is the authentication secret reference, used for authentication.
+Must be in the same namespace as the catalog.
+- `description` (String) Description is an optional short description of the catalog.
+- `enabled` (Boolean) Enable or disable the catalog in EDA Store
+- `refresh_interval` (Number) RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.
+Default is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments.
+- `remote_type` (String) RemoteType type of the catalog, only 'git' is supported at the moment.
+- `remote_url` (String) RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.
+Default is HTTPS if no scheme is given.
+- `skip_tls_verify` (Boolean) SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure.
+- `title` (String) Title is an UI-friendly name for the catalog.
 
 
 <a id="nestedatt--items--status"></a>

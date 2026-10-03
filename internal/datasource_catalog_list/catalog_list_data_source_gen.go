@@ -104,42 +104,42 @@ func CatalogListDataSourceSchema(ctx context.Context) schema.Schema {
 						"spec": schema.SingleNestedAttribute{
 							Attributes: map[string]schema.Attribute{
 								"auth_secret_ref": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog.",
 									MarkdownDescription: "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog.",
 								},
 								"description": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "Description is an optional short description of the catalog.",
 									MarkdownDescription: "Description is an optional short description of the catalog.",
 								},
 								"enabled": schema.BoolAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "Enable or disable the catalog in EDA Store",
 									MarkdownDescription: "Enable or disable the catalog in EDA Store",
 								},
 								"refresh_interval": schema.Int64Attribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.\nDefault is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments.",
 									MarkdownDescription: "RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.\nDefault is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments.",
 								},
 								"remote_type": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "RemoteType type of the catalog, only 'git' is supported at the moment.",
 									MarkdownDescription: "RemoteType type of the catalog, only 'git' is supported at the moment.",
 								},
 								"remote_url": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.\nDefault is HTTPS if no scheme is given.",
 									MarkdownDescription: "RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.\nDefault is HTTPS if no scheme is given.",
 								},
 								"skip_tls_verify": schema.BoolAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure.",
 									MarkdownDescription: "SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure.",
 								},
 								"title": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "Title is an UI-friendly name for the catalog.",
 									MarkdownDescription: "Title is an UI-friendly name for the catalog.",
 								},
@@ -149,7 +149,7 @@ func CatalogListDataSourceSchema(ctx context.Context) schema.Schema {
 									AttrTypes: SpecValue{}.AttributeTypes(ctx),
 								},
 							},
-							Optional:            true,
+							Computed:            true,
 							Description:         "CatalogSpec defines the desired state of a Catalog.",
 							MarkdownDescription: "CatalogSpec defines the desired state of a Catalog.",
 						},

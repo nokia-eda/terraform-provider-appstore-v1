@@ -94,7 +94,7 @@ func AppInstallerDataSourceSchema(ctx context.Context) schema.Schema {
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"app_id": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app.",
 									MarkdownDescription: "AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app.",
 								},
@@ -105,24 +105,24 @@ func AppInstallerDataSourceSchema(ctx context.Context) schema.Schema {
 											AttrTypes: AppSettingsValue{}.AttributeTypes(ctx),
 										},
 									},
-									Optional:            true,
+									Computed:            true,
 									Description:         "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is.",
 									MarkdownDescription: "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is.",
 								},
 								"catalog": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "Catalog of the app to be installed.\nThis is where app manifest is retrieved from, along with some other metadata.",
 									MarkdownDescription: "Catalog of the app to be installed.\nThis is where app manifest is retrieved from, along with some other metadata.",
 								},
 								"version": schema.SingleNestedAttribute{
 									Attributes: map[string]schema.Attribute{
 										"type": schema.StringAttribute{
-											Optional:            true,
+											Computed:            true,
 											Description:         "The version type of the App. Currently supported: semver, commit.\nDefault is semver.",
 											MarkdownDescription: "The version type of the App. Currently supported: semver, commit.\nDefault is semver.",
 										},
 										"value": schema.StringAttribute{
-											Optional:            true,
+											Computed:            true,
 											Description:         "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected",
 											MarkdownDescription: "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/<appname>/<semver>\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected",
 										},
@@ -132,7 +132,7 @@ func AppInstallerDataSourceSchema(ctx context.Context) schema.Schema {
 											AttrTypes: VersionValue{}.AttributeTypes(ctx),
 										},
 									},
-									Optional:            true,
+									Computed:            true,
 									Description:         "Version of the App that is to be installed.",
 									MarkdownDescription: "Version of the App that is to be installed.",
 								},
@@ -143,23 +143,23 @@ func AppInstallerDataSourceSchema(ctx context.Context) schema.Schema {
 								},
 							},
 						},
-						Optional:            true,
+						Computed:            true,
 						Description:         "Apps are the input apps to the installer.",
 						MarkdownDescription: "Apps are the input apps to the installer.",
 					},
 					"auto_process_requirements": schema.ListAttribute{
 						ElementType:         types.StringType,
-						Optional:            true,
+						Computed:            true,
 						Description:         "AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.\nCurrently only 'strict' is supported.",
 						MarkdownDescription: "AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.\nCurrently only 'strict' is supported.",
 					},
 					"dry_run": schema.BoolAttribute{
-						Optional:            true,
+						Computed:            true,
 						Description:         "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result.",
 						MarkdownDescription: "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result.",
 					},
 					"operation": schema.StringAttribute{
-						Optional:            true,
+						Computed:            true,
 						Description:         "Operation is the installing operation.\nCurrently supported are 'install', 'delete'.",
 						MarkdownDescription: "Operation is the installing operation.\nCurrently supported are 'install', 'delete'.",
 					},
@@ -169,7 +169,7 @@ func AppInstallerDataSourceSchema(ctx context.Context) schema.Schema {
 						AttrTypes: SpecValue{}.AttributeTypes(ctx),
 					},
 				},
-				Optional: true,
+				Computed: true,
 			},
 			"status": schema.SingleNestedAttribute{
 				Attributes: map[string]schema.Attribute{

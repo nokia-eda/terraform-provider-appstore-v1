@@ -57,6 +57,10 @@ Optional:
 Must be in the same namespace as the registry.
 - `mirror` (String) Mirror registry of the original remote registry.
 App store will use the mirror instead of the original registry that is referenced by a registry.
+- `skip_digest_verification` (Boolean) SkipDigestVerification skips pinning the image pull to the digest recorded
+in the catalog manifest.
+- `skip_signature_verification` (Boolean) SkipSignatureVerification indicates whether to skip the signature verification of the appImage.
+Apps without signature behave the same as invalid signatures. The skip is required for these apps
 - `skip_tls_verify` (Boolean) Skip TLS Verification on connection
 - `title` (String) Title is an UI-friendly name for the registry.
 

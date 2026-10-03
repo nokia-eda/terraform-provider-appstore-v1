@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0
+
+Initial release of 26.8 support.
+
+- Add the `signing_key` resource and data source.
+- Add skip digest and signature verification options on `registry`.
+
+## 1.1.1
+
+- Mark the `client_secret` provider attribute as sensitive and fix provider configuration handling.
+
+## 1.1.0
+
+- Add `enabled` on the `catalog` resource.
+
 ## 1.0.1
 
 - Fix K8s Patch operation for the resource.

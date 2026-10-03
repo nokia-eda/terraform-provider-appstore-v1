@@ -22,7 +22,6 @@ description: |-
 ### Optional
 
 - `hash` (String) resource content will be returned as it was at the time of this git hash
-- `spec` (Attributes) RegistrySpec defines the desired state of a Registry (see [below for nested schema](#nestedatt--spec))
 
 ### Read-Only
 
@@ -31,22 +30,8 @@ description: |-
 - `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--metadata))
+- `spec` (Attributes) RegistrySpec defines the desired state of a Registry (see [below for nested schema](#nestedatt--spec))
 - `status` (Attributes) RegistryStatus defines the observed state of Registry (see [below for nested schema](#nestedatt--status))
-
-<a id="nestedatt--spec"></a>
-### Nested Schema for `spec`
-
-Optional:
-
-- `auth_secret_ref` (String) AuthSecretRef is the authentication secret reference, used for authentication.
-Must be in the same namespace as the registry.
-- `mirror` (String) Mirror registry of the original remote registry.
-App store will use the mirror instead of the original registry that is referenced by a registry.
-- `remote_url` (String) RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.
-	Default is HTTPS if no scheme is given.
-- `skip_tls_verify` (Boolean) Skip TLS Verification on connection
-- `title` (String) Title is an UI-friendly name for the registry.
-
 
 <a id="nestedatt--alarms"></a>
 ### Nested Schema for `alarms`
@@ -76,6 +61,25 @@ Read-Only:
 - `labels` (Map of String)
 - `name` (String)
 - `namespace` (String)
+
+
+<a id="nestedatt--spec"></a>
+### Nested Schema for `spec`
+
+Read-Only:
+
+- `auth_secret_ref` (String) AuthSecretRef is the authentication secret reference, used for authentication.
+Must be in the same namespace as the registry.
+- `mirror` (String) Mirror registry of the original remote registry.
+App store will use the mirror instead of the original registry that is referenced by a registry.
+- `remote_url` (String) RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.
+	Default is HTTPS if no scheme is given.
+- `skip_digest_verification` (Boolean) SkipDigestVerification skips pinning the image pull to the digest recorded
+in the catalog manifest.
+- `skip_signature_verification` (Boolean) SkipSignatureVerification indicates whether to skip the signature verification of the appImage.
+Apps without signature behave the same as invalid signatures. The skip is required for these apps
+- `skip_tls_verify` (Boolean) Skip TLS Verification on connection
+- `title` (String) Title is an UI-friendly name for the registry.
 
 
 <a id="nestedatt--status"></a>

@@ -42,6 +42,16 @@ data_sources:
       path: /apps/appstore.eda.nokia.com/v1
       method: GET
 
+  signing_key:
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
+      method: GET
+
+  signing_key_list:
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys
+      method: GET
+
   workflow_get_inputs_resp_elem:
     read:
       path: /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name}/_input
@@ -85,4 +95,18 @@ resources:
       method: PUT
     delete:
       path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: DELETE
+
+  signing_key:
+    create:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys
+      method: POST
+    read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
+      method: GET
+    update:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
+      method: PUT
+    delete:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
       method: DELETE

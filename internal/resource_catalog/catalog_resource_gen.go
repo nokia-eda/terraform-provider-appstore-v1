@@ -124,11 +124,13 @@ func CatalogResourceSchema(ctx context.Context) schema.Schema {
 				Attributes: map[string]schema.Attribute{
 					"auth_secret_ref": schema.StringAttribute{
 						Optional:            true,
+						Computed:            true,
 						Description:         "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog.",
 						MarkdownDescription: "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog.",
 					},
 					"description": schema.StringAttribute{
 						Optional:            true,
+						Computed:            true,
 						Description:         "Description is an optional short description of the catalog.",
 						MarkdownDescription: "Description is an optional short description of the catalog.",
 						Validators: []validator.String{
@@ -163,6 +165,7 @@ func CatalogResourceSchema(ctx context.Context) schema.Schema {
 					},
 					"remote_url": schema.StringAttribute{
 						Optional:            true,
+						Computed:            true,
 						Description:         "RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.\nDefault is HTTPS if no scheme is given.",
 						MarkdownDescription: "RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.\nDefault is HTTPS if no scheme is given.",
 					},
@@ -175,6 +178,7 @@ func CatalogResourceSchema(ctx context.Context) schema.Schema {
 					},
 					"title": schema.StringAttribute{
 						Optional:            true,
+						Computed:            true,
 						Description:         "Title is an UI-friendly name for the catalog.",
 						MarkdownDescription: "Title is an UI-friendly name for the catalog.",
 						Validators: []validator.String{

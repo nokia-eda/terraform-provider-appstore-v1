@@ -269,6 +269,8 @@ func (p *appstoreProvider) DataSources(ctx context.Context) []func() datasource.
 		NewRegistryDataSource,
 		NewRegistryListDataSource,
 		NewResourceListDataSource,
+		NewSigningKeyDataSource,
+		NewSigningKeyListDataSource,
 		NewWorkflowGetInputsRespElemDataSource,
 	}
 }
@@ -278,5 +280,6 @@ func (p *appstoreProvider) Resources(ctx context.Context) []func() resource.Reso
 		NewAppInstallerResource,
 		NewCatalogResource,
 		NewRegistryResource,
+		NewSigningKeyResource,
 	}
 }

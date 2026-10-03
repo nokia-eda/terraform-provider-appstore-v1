@@ -177,51 +177,51 @@
                     {
                         "name": "spec",
                         "single_nested": {
-                            "computed_optional_required": "optional",
+                            "computed_optional_required": "computed",
                             "attributes": [
                                 {
                                     "name": "apps",
                                     "list_nested": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "nested_object": {
                                             "attributes": [
                                                 {
                                                     "name": "app_id",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app."
                                                     }
                                                 },
                                                 {
                                                     "name": "app_settings",
                                                     "single_nested": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
                                                     }
                                                 },
                                                 {
                                                     "name": "catalog",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Catalog of the app to be installed.\nThis is where app manifest is retrieved from, along with some other metadata."
                                                     }
                                                 },
                                                 {
                                                     "name": "version",
                                                     "single_nested": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "attributes": [
                                                             {
                                                                 "name": "type",
                                                                 "string": {
-                                                                    "computed_optional_required": "optional",
+                                                                    "computed_optional_required": "computed",
                                                                     "description": "The version type of the App. Currently supported: semver, commit.\nDefault is semver."
                                                                 }
                                                             },
                                                             {
                                                                 "name": "value",
                                                                 "string": {
-                                                                    "computed_optional_required": "optional",
+                                                                    "computed_optional_required": "computed",
                                                                     "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected"
                                                                 }
                                                             }
@@ -237,7 +237,7 @@
                                 {
                                     "name": "auto_process_requirements",
                                     "list": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "element_type": {
                                             "string": {}
                                         },
@@ -247,14 +247,14 @@
                                 {
                                     "name": "dry_run",
                                     "bool": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result."
                                     }
                                 },
                                 {
                                     "name": "operation",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "Operation is the installing operation.\nCurrently supported are 'install', 'delete'."
                                     }
                                 }
@@ -434,51 +434,51 @@
                                     {
                                         "name": "spec",
                                         "single_nested": {
-                                            "computed_optional_required": "optional",
+                                            "computed_optional_required": "computed",
                                             "attributes": [
                                                 {
                                                     "name": "apps",
                                                     "list_nested": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "nested_object": {
                                                             "attributes": [
                                                                 {
                                                                     "name": "app_id",
                                                                     "string": {
-                                                                        "computed_optional_required": "optional",
+                                                                        "computed_optional_required": "computed",
                                                                         "description": "AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app."
                                                                     }
                                                                 },
                                                                 {
                                                                     "name": "app_settings",
                                                                     "single_nested": {
-                                                                        "computed_optional_required": "optional",
+                                                                        "computed_optional_required": "computed",
                                                                         "description": "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
                                                                     }
                                                                 },
                                                                 {
                                                                     "name": "catalog",
                                                                     "string": {
-                                                                        "computed_optional_required": "optional",
+                                                                        "computed_optional_required": "computed",
                                                                         "description": "Catalog of the app to be installed.\nThis is where app manifest is retrieved from, along with some other metadata."
                                                                     }
                                                                 },
                                                                 {
                                                                     "name": "version",
                                                                     "single_nested": {
-                                                                        "computed_optional_required": "optional",
+                                                                        "computed_optional_required": "computed",
                                                                         "attributes": [
                                                                             {
                                                                                 "name": "type",
                                                                                 "string": {
-                                                                                    "computed_optional_required": "optional",
+                                                                                    "computed_optional_required": "computed",
                                                                                     "description": "The version type of the App. Currently supported: semver, commit.\nDefault is semver."
                                                                                 }
                                                                             },
                                                                             {
                                                                                 "name": "value",
                                                                                 "string": {
-                                                                                    "computed_optional_required": "optional",
+                                                                                    "computed_optional_required": "computed",
                                                                                     "description": "The version of the App.\nIf the VersionType is set to semver,\nthen the semantic version of the git tag in the form of \"apps/\u003cappname\u003e/\u003csemver\u003e\" is used.\nIf the VersionType is set to commit,\nthen the commit reference (e.g. git hash) is expected.\nIf the VersionType is set to alias,\nthen one of [latest, latestMinor, latestMaintenance] is expected"
                                                                                 }
                                                                             }
@@ -494,7 +494,7 @@
                                                 {
                                                     "name": "auto_process_requirements",
                                                     "list": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "element_type": {
                                                             "string": {}
                                                         },
@@ -504,14 +504,14 @@
                                                 {
                                                     "name": "dry_run",
                                                     "bool": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "DryRun indicates whether to run the installer without actually applying the manifest to the system.\nThe results will be put in a transaction result."
                                                     }
                                                 },
                                                 {
                                                     "name": "operation",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Operation is the installing operation.\nCurrently supported are 'install', 'delete'."
                                                     }
                                                 }
@@ -675,61 +675,61 @@
                     {
                         "name": "spec",
                         "single_nested": {
-                            "computed_optional_required": "optional",
+                            "computed_optional_required": "computed",
                             "attributes": [
                                 {
                                     "name": "auth_secret_ref",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog."
                                     }
                                 },
                                 {
                                     "name": "description",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "Description is an optional short description of the catalog."
                                     }
                                 },
                                 {
                                     "name": "enabled",
                                     "bool": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "Enable or disable the catalog in EDA Store"
                                     }
                                 },
                                 {
                                     "name": "refresh_interval",
                                     "int64": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.\nDefault is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments."
                                     }
                                 },
                                 {
                                     "name": "remote_type",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "RemoteType type of the catalog, only 'git' is supported at the moment."
                                     }
                                 },
                                 {
                                     "name": "remote_url",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.\nDefault is HTTPS if no scheme is given."
                                     }
                                 },
                                 {
                                     "name": "skip_tls_verify",
                                     "bool": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure."
                                     }
                                 },
                                 {
                                     "name": "title",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "Title is an UI-friendly name for the catalog."
                                     }
                                 }
@@ -913,61 +913,61 @@
                                     {
                                         "name": "spec",
                                         "single_nested": {
-                                            "computed_optional_required": "optional",
+                                            "computed_optional_required": "computed",
                                             "attributes": [
                                                 {
                                                     "name": "auth_secret_ref",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog."
                                                     }
                                                 },
                                                 {
                                                     "name": "description",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Description is an optional short description of the catalog."
                                                     }
                                                 },
                                                 {
                                                     "name": "enabled",
                                                     "bool": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Enable or disable the catalog in EDA Store"
                                                     }
                                                 },
                                                 {
                                                     "name": "refresh_interval",
                                                     "int64": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "RefreshInterval tells the controller how often it should check the remote catalog for new updates, in seconds.\nDefault is 180 seconds. Minimum is 30 seconds for production environments; 10 seconds for test environments."
                                                     }
                                                 },
                                                 {
                                                     "name": "remote_type",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "RemoteType type of the catalog, only 'git' is supported at the moment."
                                                     }
                                                 },
                                                 {
                                                     "name": "remote_url",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.\nDefault is HTTPS if no scheme is given."
                                                     }
                                                 },
                                                 {
                                                     "name": "skip_tls_verify",
                                                     "bool": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "SkipTLSVerify skips the validity check for the server's certificate. This will make HTTPS connections insecure."
                                                     }
                                                 },
                                                 {
                                                     "name": "title",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Title is an UI-friendly name for the catalog."
                                                     }
                                                 }
@@ -1135,40 +1135,54 @@
                     {
                         "name": "spec",
                         "single_nested": {
-                            "computed_optional_required": "optional",
+                            "computed_optional_required": "computed",
                             "attributes": [
                                 {
                                     "name": "auth_secret_ref",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry."
                                     }
                                 },
                                 {
                                     "name": "mirror",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry."
                                     }
                                 },
                                 {
                                     "name": "remote_url",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.\n\tDefault is HTTPS if no scheme is given."
+                                    }
+                                },
+                                {
+                                    "name": "skip_digest_verification",
+                                    "bool": {
+                                        "computed_optional_required": "computed",
+                                        "description": "SkipDigestVerification skips pinning the image pull to the digest recorded\nin the catalog manifest."
+                                    }
+                                },
+                                {
+                                    "name": "skip_signature_verification",
+                                    "bool": {
+                                        "computed_optional_required": "computed",
+                                        "description": "SkipSignatureVerification indicates whether to skip the signature verification of the appImage.\nApps without signature behave the same as invalid signatures. The skip is required for these apps"
                                     }
                                 },
                                 {
                                     "name": "skip_tls_verify",
                                     "bool": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "Skip TLS Verification on connection"
                                     }
                                 },
                                 {
                                     "name": "title",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed",
                                         "description": "Title is an UI-friendly name for the registry."
                                     }
                                 }
@@ -1345,40 +1359,54 @@
                                     {
                                         "name": "spec",
                                         "single_nested": {
-                                            "computed_optional_required": "optional",
+                                            "computed_optional_required": "computed",
                                             "attributes": [
                                                 {
                                                     "name": "auth_secret_ref",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry."
                                                     }
                                                 },
                                                 {
                                                     "name": "mirror",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry."
                                                     }
                                                 },
                                                 {
                                                     "name": "remote_url",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.\n\tDefault is HTTPS if no scheme is given."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "skip_digest_verification",
+                                                    "bool": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "SkipDigestVerification skips pinning the image pull to the digest recorded\nin the catalog manifest."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "skip_signature_verification",
+                                                    "bool": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "SkipSignatureVerification indicates whether to skip the signature verification of the appImage.\nApps without signature behave the same as invalid signatures. The skip is required for these apps"
                                                     }
                                                 },
                                                 {
                                                     "name": "skip_tls_verify",
                                                     "bool": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Skip TLS Verification on connection"
                                                     }
                                                 },
                                                 {
                                                     "name": "title",
                                                     "string": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed",
                                                         "description": "Title is an UI-friendly name for the registry."
                                                     }
                                                 }
@@ -1488,6 +1516,418 @@
                                     }
                                 ]
                             }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "signing_key",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "required",
+                            "description": "name of the SigningKey"
+                        }
+                    },
+                    {
+                        "name": "hash",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "resource content will be returned as it was at the time of this git hash"
+                        }
+                    },
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "public_keys",
+                                    "list_nested": {
+                                        "computed_optional_required": "computed",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "key",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Key is the PKIX PEM-encoded public key (e.g. -----BEGIN PUBLIC KEY-----)."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "title",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Title optionally identifies this key for status messages and debugging."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "PublicKeys is the non-empty list of trusted cosign-compatible public keys."
+                                    }
+                                }
+                            ],
+                            "description": "SigningKeySpec defines the desired state of a SigningKey."
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed",
+                            "attributes": [
+                                {
+                                    "name": "error",
+                                    "string": {
+                                        "computed_optional_required": "computed",
+                                        "description": "Error describes the last validation failure (e.g. which publicKeys entry failed to parse)."
+                                    }
+                                },
+                                {
+                                    "name": "last_refresh_time",
+                                    "string": {
+                                        "computed_optional_required": "computed",
+                                        "description": "LastRefreshTime is the last time the controller validated spec.publicKeys."
+                                    }
+                                },
+                                {
+                                    "name": "loaded",
+                                    "bool": {
+                                        "computed_optional_required": "computed",
+                                        "description": "Loaded is true when every entry in spec.publicKeys parsed successfully as a public key."
+                                    }
+                                },
+                                {
+                                    "name": "loaded_key_count",
+                                    "int64": {
+                                        "computed_optional_required": "computed",
+                                        "description": "LoadedKeyCount is the number of successfully parsed public keys on the last reconcile."
+                                    }
+                                }
+                            ],
+                            "description": "SigningKeyStatus defines the observed state of a SigningKey."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "signing_key_list",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "fields",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched."
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "an EQL \"where\" expression that will be used to filter the set of resources returned."
+                        }
+                    },
+                    {
+                        "name": "label_selector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "A label selector string to filter the results based on resource labels. If specified multiple times, the union of resources which satisfy a label-selector will be returned."
+                        }
+                    },
+                    {
+                        "name": "labelselector",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "Deprecated: a label selector string to filter the results based on CR labels"
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed"
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "list_nested": {
+                            "computed_optional_required": "computed",
+                            "nested_object": {
+                                "attributes": [
+                                    {
+                                        "name": "alarms",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "critical",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "major",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "minor",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "warning",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "api_version",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "deviations",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "kind",
+                                        "string": {
+                                            "computed_optional_required": "computed"
+                                        }
+                                    },
+                                    {
+                                        "name": "metadata",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "annotations",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "labels",
+                                                    "map": {
+                                                        "computed_optional_required": "computed",
+                                                        "element_type": {
+                                                            "string": {}
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "name",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                },
+                                                {
+                                                    "name": "namespace",
+                                                    "string": {
+                                                        "computed_optional_required": "computed"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "spec",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "public_keys",
+                                                    "list_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "nested_object": {
+                                                            "attributes": [
+                                                                {
+                                                                    "name": "key",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Key is the PKIX PEM-encoded public key (e.g. -----BEGIN PUBLIC KEY-----)."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "title",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Title optionally identifies this key for status messages and debugging."
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        "description": "PublicKeys is the non-empty list of trusted cosign-compatible public keys."
+                                                    }
+                                                }
+                                            ],
+                                            "description": "SigningKeySpec defines the desired state of a SigningKey."
+                                        }
+                                    },
+                                    {
+                                        "name": "status",
+                                        "single_nested": {
+                                            "computed_optional_required": "computed",
+                                            "attributes": [
+                                                {
+                                                    "name": "error",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Error describes the last validation failure (e.g. which publicKeys entry failed to parse)."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "last_refresh_time",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "LastRefreshTime is the last time the controller validated spec.publicKeys."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "loaded",
+                                                    "bool": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Loaded is true when every entry in spec.publicKeys parsed successfully as a public key."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "loaded_key_count",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "LoadedKeyCount is the number of successfully parsed public keys on the last reconcile."
+                                                    }
+                                                }
+                                            ],
+                                            "description": "SigningKeyStatus defines the observed state of a SigningKey."
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed"
                         }
                     }
                 ]
@@ -1749,7 +2189,7 @@
                                                 {
                                                     "name": "app_settings",
                                                     "single_nested": {
-                                                        "computed_optional_required": "optional",
+                                                        "computed_optional_required": "computed_optional",
                                                         "description": "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is."
                                                     }
                                                 },
@@ -1806,7 +2246,7 @@
                                 {
                                     "name": "auto_process_requirements",
                                     "list": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "element_type": {
                                             "string": {}
                                         },
@@ -2054,14 +2494,14 @@
                                 {
                                     "name": "auth_secret_ref",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the catalog."
                                     }
                                 },
                                 {
                                     "name": "description",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "description": "Description is an optional short description of the catalog.",
                                         "validators": [
                                             {
@@ -2122,7 +2562,7 @@
                                 {
                                     "name": "remote_url",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "description": "RemoteURL is the HTTP(S) remote URL of the catalog. Supported URI schemes: 'https://' and 'http://'.\nDefault is HTTPS if no scheme is given."
                                     }
                                 },
@@ -2139,7 +2579,7 @@
                                 {
                                     "name": "title",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "description": "Title is an UI-friendly name for the catalog.",
                                         "validators": [
                                             {
@@ -2374,14 +2814,14 @@
                                 {
                                     "name": "auth_secret_ref",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "description": "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry."
                                     }
                                 },
                                 {
                                     "name": "mirror",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "description": "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry."
                                     }
                                 },
@@ -2390,6 +2830,26 @@
                                     "string": {
                                         "computed_optional_required": "required",
                                         "description": "RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.\n\tDefault is HTTPS if no scheme is given."
+                                    }
+                                },
+                                {
+                                    "name": "skip_digest_verification",
+                                    "bool": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": false
+                                        },
+                                        "description": "SkipDigestVerification skips pinning the image pull to the digest recorded\nin the catalog manifest."
+                                    }
+                                },
+                                {
+                                    "name": "skip_signature_verification",
+                                    "bool": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": false
+                                        },
+                                        "description": "SkipSignatureVerification indicates whether to skip the signature verification of the appImage.\nApps without signature behave the same as invalid signatures. The skip is required for these apps"
                                     }
                                 },
                                 {
@@ -2405,7 +2865,7 @@
                                 {
                                     "name": "title",
                                     "string": {
-                                        "computed_optional_required": "optional",
+                                        "computed_optional_required": "computed_optional",
                                         "description": "Title is an UI-friendly name for the registry.",
                                         "validators": [
                                             {
@@ -2456,6 +2916,278 @@
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "name of the Registry"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "signing_key",
+            "schema": {
+                "attributes": [
+                    {
+                        "name": "alarms",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "critical",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "major",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "minor",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                },
+                                {
+                                    "name": "warning",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "api_version",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "appstore.eda.nokia.com/v1"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^appstore\\\\.eda\\\\.nokia\\\\.com/v1$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "deviations",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "kind",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "default": {
+                                "static": "SigningKey"
+                            },
+                            "validators": [
+                                {
+                                    "custom": {
+                                        "imports": [
+                                            {
+                                                "path": "regexp"
+                                            },
+                                            {
+                                                "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                            }
+                                        ],
+                                        "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^SigningKey$\"), \"\")"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "metadata",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "annotations",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "labels",
+                                    "map": {
+                                        "computed_optional_required": "computed_optional",
+                                        "element_type": {
+                                            "string": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "name",
+                                    "string": {
+                                        "computed_optional_required": "required",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.LengthAtMost(253)"
+                                                }
+                                            },
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "regexp"
+                                                        },
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$\"), \"\")"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "namespace",
+                                    "string": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": "eda-system"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spec",
+                        "single_nested": {
+                            "computed_optional_required": "required",
+                            "attributes": [
+                                {
+                                    "name": "public_keys",
+                                    "list_nested": {
+                                        "computed_optional_required": "required",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "key",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Key is the PKIX PEM-encoded public key (e.g. -----BEGIN PUBLIC KEY-----).",
+                                                        "validators": [
+                                                            {
+                                                                "custom": {
+                                                                    "imports": [
+                                                                        {
+                                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+                                                                        }
+                                                                    ],
+                                                                    "schema_definition": "stringvalidator.LengthAtLeast(1)"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "name": "title",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Title optionally identifies this key for status messages and debugging."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "PublicKeys is the non-empty list of trusted cosign-compatible public keys.",
+                                        "validators": [
+                                            {
+                                                "custom": {
+                                                    "imports": [
+                                                        {
+                                                            "path": "github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+                                                        }
+                                                    ],
+                                                    "schema_definition": "listvalidator.SizeAtLeast(1)"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "description": "SigningKeySpec defines the desired state of a SigningKey."
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "single_nested": {
+                            "computed_optional_required": "computed_optional",
+                            "attributes": [
+                                {
+                                    "name": "error",
+                                    "string": {
+                                        "computed_optional_required": "computed_optional",
+                                        "description": "Error describes the last validation failure (e.g. which publicKeys entry failed to parse)."
+                                    }
+                                },
+                                {
+                                    "name": "last_refresh_time",
+                                    "string": {
+                                        "computed_optional_required": "computed_optional",
+                                        "description": "LastRefreshTime is the last time the controller validated spec.publicKeys."
+                                    }
+                                },
+                                {
+                                    "name": "loaded",
+                                    "bool": {
+                                        "computed_optional_required": "computed_optional",
+                                        "default": {
+                                            "static": false
+                                        },
+                                        "description": "Loaded is true when every entry in spec.publicKeys parsed successfully as a public key."
+                                    }
+                                },
+                                {
+                                    "name": "loaded_key_count",
+                                    "int64": {
+                                        "computed_optional_required": "computed_optional",
+                                        "description": "LoadedKeyCount is the number of successfully parsed public keys on the last reconcile."
+                                    }
+                                }
+                            ],
+                            "description": "SigningKeyStatus defines the observed state of a SigningKey."
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "string": {
+                            "computed_optional_required": "computed_optional",
+                            "description": "name of the SigningKey"
                         }
                     }
                 ]

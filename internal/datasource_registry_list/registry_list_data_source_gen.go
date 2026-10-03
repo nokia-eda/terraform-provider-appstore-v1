@@ -104,27 +104,37 @@ func RegistryListDataSourceSchema(ctx context.Context) schema.Schema {
 						"spec": schema.SingleNestedAttribute{
 							Attributes: map[string]schema.Attribute{
 								"auth_secret_ref": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry.",
 									MarkdownDescription: "AuthSecretRef is the authentication secret reference, used for authentication.\nMust be in the same namespace as the registry.",
 								},
 								"mirror": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry.",
 									MarkdownDescription: "Mirror registry of the original remote registry.\nApp store will use the mirror instead of the original registry that is referenced by a registry.",
 								},
 								"remote_url": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.\n\tDefault is HTTPS if no scheme is given.",
 									MarkdownDescription: "RemoteURL is the remote URL of the registry. Supported URI schemes: 'https://' and 'http://'.\n\tDefault is HTTPS if no scheme is given.",
 								},
+								"skip_digest_verification": schema.BoolAttribute{
+									Computed:            true,
+									Description:         "SkipDigestVerification skips pinning the image pull to the digest recorded\nin the catalog manifest.",
+									MarkdownDescription: "SkipDigestVerification skips pinning the image pull to the digest recorded\nin the catalog manifest.",
+								},
+								"skip_signature_verification": schema.BoolAttribute{
+									Computed:            true,
+									Description:         "SkipSignatureVerification indicates whether to skip the signature verification of the appImage.\nApps without signature behave the same as invalid signatures. The skip is required for these apps",
+									MarkdownDescription: "SkipSignatureVerification indicates whether to skip the signature verification of the appImage.\nApps without signature behave the same as invalid signatures. The skip is required for these apps",
+								},
 								"skip_tls_verify": schema.BoolAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "Skip TLS Verification on connection",
 									MarkdownDescription: "Skip TLS Verification on connection",
 								},
 								"title": schema.StringAttribute{
-									Optional:            true,
+									Computed:            true,
 									Description:         "Title is an UI-friendly name for the registry.",
 									MarkdownDescription: "Title is an UI-friendly name for the registry.",
 								},
@@ -134,7 +144,7 @@ func RegistryListDataSourceSchema(ctx context.Context) schema.Schema {
 									AttrTypes: SpecValue{}.AttributeTypes(ctx),
 								},
 							},
-							Optional:            true,
+							Computed:            true,
 							Description:         "RegistrySpec defines the desired state of a Registry",
 							MarkdownDescription: "RegistrySpec defines the desired state of a Registry",
 						},
@@ -2430,6 +2440,42 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 			fmt.Sprintf(`remote_url expected to be basetypes.StringValue, was: %T`, remoteUrlAttribute))
 	}
 
+	skipDigestVerificationAttribute, ok := attributes["skip_digest_verification"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`skip_digest_verification is missing from object`)
+
+		return nil, diags
+	}
+
+	skipDigestVerificationVal, ok := skipDigestVerificationAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`skip_digest_verification expected to be basetypes.BoolValue, was: %T`, skipDigestVerificationAttribute))
+	}
+
+	skipSignatureVerificationAttribute, ok := attributes["skip_signature_verification"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`skip_signature_verification is missing from object`)
+
+		return nil, diags
+	}
+
+	skipSignatureVerificationVal, ok := skipSignatureVerificationAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`skip_signature_verification expected to be basetypes.BoolValue, was: %T`, skipSignatureVerificationAttribute))
+	}
+
 	skipTlsVerifyAttribute, ok := attributes["skip_tls_verify"]
 
 	if !ok {
@@ -2471,12 +2517,14 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 	}
 
 	return SpecValue{
-		AuthSecretRef: authSecretRefVal,
-		Mirror:        mirrorVal,
-		RemoteUrl:     remoteUrlVal,
-		SkipTlsVerify: skipTlsVerifyVal,
-		Title:         titleVal,
-		state:         attr.ValueStateKnown,
+		AuthSecretRef:             authSecretRefVal,
+		Mirror:                    mirrorVal,
+		RemoteUrl:                 remoteUrlVal,
+		SkipDigestVerification:    skipDigestVerificationVal,
+		SkipSignatureVerification: skipSignatureVerificationVal,
+		SkipTlsVerify:             skipTlsVerifyVal,
+		Title:                     titleVal,
+		state:                     attr.ValueStateKnown,
 	}, diags
 }
 
@@ -2597,6 +2645,42 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 			fmt.Sprintf(`remote_url expected to be basetypes.StringValue, was: %T`, remoteUrlAttribute))
 	}
 
+	skipDigestVerificationAttribute, ok := attributes["skip_digest_verification"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`skip_digest_verification is missing from object`)
+
+		return NewSpecValueUnknown(), diags
+	}
+
+	skipDigestVerificationVal, ok := skipDigestVerificationAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`skip_digest_verification expected to be basetypes.BoolValue, was: %T`, skipDigestVerificationAttribute))
+	}
+
+	skipSignatureVerificationAttribute, ok := attributes["skip_signature_verification"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`skip_signature_verification is missing from object`)
+
+		return NewSpecValueUnknown(), diags
+	}
+
+	skipSignatureVerificationVal, ok := skipSignatureVerificationAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`skip_signature_verification expected to be basetypes.BoolValue, was: %T`, skipSignatureVerificationAttribute))
+	}
+
 	skipTlsVerifyAttribute, ok := attributes["skip_tls_verify"]
 
 	if !ok {
@@ -2638,12 +2722,14 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 	}
 
 	return SpecValue{
-		AuthSecretRef: authSecretRefVal,
-		Mirror:        mirrorVal,
-		RemoteUrl:     remoteUrlVal,
-		SkipTlsVerify: skipTlsVerifyVal,
-		Title:         titleVal,
-		state:         attr.ValueStateKnown,
+		AuthSecretRef:             authSecretRefVal,
+		Mirror:                    mirrorVal,
+		RemoteUrl:                 remoteUrlVal,
+		SkipDigestVerification:    skipDigestVerificationVal,
+		SkipSignatureVerification: skipSignatureVerificationVal,
+		SkipTlsVerify:             skipTlsVerifyVal,
+		Title:                     titleVal,
+		state:                     attr.ValueStateKnown,
 	}, diags
 }
 
@@ -2715,16 +2801,18 @@ func (t SpecType) ValueType(ctx context.Context) attr.Value {
 var _ basetypes.ObjectValuable = SpecValue{}
 
 type SpecValue struct {
-	AuthSecretRef basetypes.StringValue `tfsdk:"auth_secret_ref"`
-	Mirror        basetypes.StringValue `tfsdk:"mirror"`
-	RemoteUrl     basetypes.StringValue `tfsdk:"remote_url"`
-	SkipTlsVerify basetypes.BoolValue   `tfsdk:"skip_tls_verify"`
-	Title         basetypes.StringValue `tfsdk:"title"`
-	state         attr.ValueState
+	AuthSecretRef             basetypes.StringValue `tfsdk:"auth_secret_ref"`
+	Mirror                    basetypes.StringValue `tfsdk:"mirror"`
+	RemoteUrl                 basetypes.StringValue `tfsdk:"remote_url"`
+	SkipDigestVerification    basetypes.BoolValue   `tfsdk:"skip_digest_verification"`
+	SkipSignatureVerification basetypes.BoolValue   `tfsdk:"skip_signature_verification"`
+	SkipTlsVerify             basetypes.BoolValue   `tfsdk:"skip_tls_verify"`
+	Title                     basetypes.StringValue `tfsdk:"title"`
+	state                     attr.ValueState
 }
 
 func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
-	attrTypes := make(map[string]tftypes.Type, 5)
+	attrTypes := make(map[string]tftypes.Type, 7)
 
 	var val tftypes.Value
 	var err error
@@ -2732,6 +2820,8 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 	attrTypes["auth_secret_ref"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["mirror"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["remote_url"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["skip_digest_verification"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["skip_signature_verification"] = basetypes.BoolType{}.TerraformType(ctx)
 	attrTypes["skip_tls_verify"] = basetypes.BoolType{}.TerraformType(ctx)
 	attrTypes["title"] = basetypes.StringType{}.TerraformType(ctx)
 
@@ -2739,7 +2829,7 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 
 	switch v.state {
 	case attr.ValueStateKnown:
-		vals := make(map[string]tftypes.Value, 5)
+		vals := make(map[string]tftypes.Value, 7)
 
 		val, err = v.AuthSecretRef.ToTerraformValue(ctx)
 
@@ -2764,6 +2854,22 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 		}
 
 		vals["remote_url"] = val
+
+		val, err = v.SkipDigestVerification.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["skip_digest_verification"] = val
+
+		val, err = v.SkipSignatureVerification.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["skip_signature_verification"] = val
 
 		val, err = v.SkipTlsVerify.ToTerraformValue(ctx)
 
@@ -2811,11 +2917,13 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 	var diags diag.Diagnostics
 
 	attributeTypes := map[string]attr.Type{
-		"auth_secret_ref": basetypes.StringType{},
-		"mirror":          basetypes.StringType{},
-		"remote_url":      basetypes.StringType{},
-		"skip_tls_verify": basetypes.BoolType{},
-		"title":           basetypes.StringType{},
+		"auth_secret_ref":             basetypes.StringType{},
+		"mirror":                      basetypes.StringType{},
+		"remote_url":                  basetypes.StringType{},
+		"skip_digest_verification":    basetypes.BoolType{},
+		"skip_signature_verification": basetypes.BoolType{},
+		"skip_tls_verify":             basetypes.BoolType{},
+		"title":                       basetypes.StringType{},
 	}
 
 	if v.IsNull() {
@@ -2829,11 +2937,13 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
-			"auth_secret_ref": v.AuthSecretRef,
-			"mirror":          v.Mirror,
-			"remote_url":      v.RemoteUrl,
-			"skip_tls_verify": v.SkipTlsVerify,
-			"title":           v.Title,
+			"auth_secret_ref":             v.AuthSecretRef,
+			"mirror":                      v.Mirror,
+			"remote_url":                  v.RemoteUrl,
+			"skip_digest_verification":    v.SkipDigestVerification,
+			"skip_signature_verification": v.SkipSignatureVerification,
+			"skip_tls_verify":             v.SkipTlsVerify,
+			"title":                       v.Title,
 		})
 
 	return objVal, diags
@@ -2866,6 +2976,14 @@ func (v SpecValue) Equal(o attr.Value) bool {
 		return false
 	}
 
+	if !v.SkipDigestVerification.Equal(other.SkipDigestVerification) {
+		return false
+	}
+
+	if !v.SkipSignatureVerification.Equal(other.SkipSignatureVerification) {
+		return false
+	}
+
 	if !v.SkipTlsVerify.Equal(other.SkipTlsVerify) {
 		return false
 	}
@@ -2887,11 +3005,13 @@ func (v SpecValue) Type(ctx context.Context) attr.Type {
 
 func (v SpecValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
-		"auth_secret_ref": basetypes.StringType{},
-		"mirror":          basetypes.StringType{},
-		"remote_url":      basetypes.StringType{},
-		"skip_tls_verify": basetypes.BoolType{},
-		"title":           basetypes.StringType{},
+		"auth_secret_ref":             basetypes.StringType{},
+		"mirror":                      basetypes.StringType{},
+		"remote_url":                  basetypes.StringType{},
+		"skip_digest_verification":    basetypes.BoolType{},
+		"skip_signature_verification": basetypes.BoolType{},
+		"skip_tls_verify":             basetypes.BoolType{},
+		"title":                       basetypes.StringType{},
 	}
 }
 

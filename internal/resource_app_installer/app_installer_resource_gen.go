@@ -137,6 +137,7 @@ func AppInstallerResourceSchema(ctx context.Context) schema.Schema {
 										},
 									},
 									Optional:            true,
+									Computed:            true,
 									Description:         "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is.",
 									MarkdownDescription: "AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.\nIf AppSettings are not again mentioned on upgrade, values will remain as is.",
 								},
@@ -190,6 +191,7 @@ func AppInstallerResourceSchema(ctx context.Context) schema.Schema {
 					"auto_process_requirements": schema.ListAttribute{
 						ElementType:         types.StringType,
 						Optional:            true,
+						Computed:            true,
 						Description:         "AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.\nCurrently only 'strict' is supported.",
 						MarkdownDescription: "AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.\nCurrently only 'strict' is supported.",
 					},

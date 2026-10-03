@@ -10,6 +10,9 @@ intent_targets:
   - read:
       path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_targets
       method: GET
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}/_targets
+      method: GET
 
 k8_s_topology_request:
   - create:
@@ -18,6 +21,9 @@ k8_s_topology_request:
   - create:
       path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_topology
       method: POST
+  - create:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}/_topology
+      method: POST
 
 resource_history:
   - read:
@@ -25,6 +31,9 @@ resource_history:
       method: GET
   - read:
       path: /apps/appstore.eda.nokia.com/v1/registries/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}/_revs
       method: GET
 
 resource_list:
@@ -38,6 +47,9 @@ status:
       method: DELETE
   - delete:
       path: /apps/appstore.eda.nokia.com/v1/registries/{name}
+      method: DELETE
+  - delete:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
       method: DELETE
 
 ui_result:
@@ -122,10 +134,37 @@ com.nokia.eda.appstore.v1.registry_deleted_resources:
       path: /apps/appstore.eda.nokia.com/v1/registries/_deleted
       method: GET
 
-totalPaths: 22
-totalSchemas: 68
-usedSchemas: 17
-unusedSchemas: 51
+com.nokia.eda.appstore.v1.signing_key:
+  - create:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys
+      method: POST
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
+      method: GET
+  - update:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
+      method: PUT
+  - update:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/{name}
+      method: PATCH
+
+com.nokia.eda.appstore.v1.signing_key_list:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys
+      method: GET
+  - delete:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys
+      method: DELETE
+
+com.nokia.eda.appstore.v1.signing_key_deleted_resources:
+  - read:
+      path: /apps/appstore.eda.nokia.com/v1/signingkeys/_deleted
+      method: GET
+
+totalPaths: 28
+totalSchemas: 75
+usedSchemas: 20
+unusedSchemas: 55
 unusedSchemaList:
   - AppGroupVersion
   - ErrorResponse
@@ -178,3 +217,7 @@ unusedSchemaList:
   - com.nokia.eda.appstore.v1.Registry_alarms
   - com.nokia.eda.appstore.v1.Registry_deviations
   - com.nokia.eda.appstore.v1.Registry_metadata
+  - com.nokia.eda.appstore.v1.SigningKey_DeletedResourceEntry
+  - com.nokia.eda.appstore.v1.SigningKey_alarms
+  - com.nokia.eda.appstore.v1.SigningKey_deviations
+  - com.nokia.eda.appstore.v1.SigningKey_metadata

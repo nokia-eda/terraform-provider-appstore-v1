@@ -24,6 +24,17 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_targets,GET,IntentTargets,,false,false,false
 /apps/appstore.eda.nokia.com/v1/registries/{name}/_topology,POST,K8STopologyRequest,,false,false,false
+/apps/appstore.eda.nokia.com/v1/signingkeys,DELETE,com.nokia.eda.appstore.v1.SigningKeyList,,false,false,false
+/apps/appstore.eda.nokia.com/v1/signingkeys,GET,com.nokia.eda.appstore.v1.SigningKeyList,signing_key_list,true,true,false
+/apps/appstore.eda.nokia.com/v1/signingkeys,POST,com.nokia.eda.appstore.v1.SigningKey,signing_key,true,false,true
+/apps/appstore.eda.nokia.com/v1/signingkeys/_deleted,GET,com.nokia.eda.appstore.v1.SigningKey_DeletedResources,,false,false,false
+/apps/appstore.eda.nokia.com/v1/signingkeys/{name},DELETE,Status,signing_key,true,false,true
+/apps/appstore.eda.nokia.com/v1/signingkeys/{name},GET,com.nokia.eda.appstore.v1.SigningKey,signing_key,true,true,true
+/apps/appstore.eda.nokia.com/v1/signingkeys/{name},PATCH,com.nokia.eda.appstore.v1.SigningKey,,false,false,false
+/apps/appstore.eda.nokia.com/v1/signingkeys/{name},PUT,com.nokia.eda.appstore.v1.SigningKey,signing_key,true,false,true
+/apps/appstore.eda.nokia.com/v1/signingkeys/{name}/_revs,GET,ResourceHistory,,false,false,false
+/apps/appstore.eda.nokia.com/v1/signingkeys/{name}/_targets,GET,IntentTargets,,false,false,false
+/apps/appstore.eda.nokia.com/v1/signingkeys/{name}/_topology,POST,K8STopologyRequest,,false,false,false
 /workflows/v1/appstore.eda.nokia.com/v1/appinstallers,GET,com.nokia.eda.appstore.v1.AppInstallerList,app_installer_list,true,true,false
 /workflows/v1/appstore.eda.nokia.com/v1/appinstallers,POST,com.nokia.eda.appstore.v1.AppInstaller,app_installer,true,false,true
 /workflows/v1/appstore.eda.nokia.com/v1/appinstallers/{name},DELETE,,app_installer,true,false,true

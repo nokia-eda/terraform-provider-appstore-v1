@@ -31,10 +31,6 @@ description: |-
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
-Optional:
-
-- `spec` (Attributes) (see [below for nested schema](#nestedatt--items--spec))
-
 Read-Only:
 
 - `alarms` (Attributes) (see [below for nested schema](#nestedatt--items--alarms))
@@ -42,54 +38,8 @@ Read-Only:
 - `deviations` (Attributes) (see [below for nested schema](#nestedatt--items--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--items--metadata))
+- `spec` (Attributes) (see [below for nested schema](#nestedatt--items--spec))
 - `status` (Attributes) (see [below for nested schema](#nestedatt--items--status))
-
-<a id="nestedatt--items--spec"></a>
-### Nested Schema for `items.spec`
-
-Optional:
-
-- `apps` (Attributes List) Apps are the input apps to the installer. (see [below for nested schema](#nestedatt--items--spec--apps))
-- `auto_process_requirements` (List of String) AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.
-Currently only 'strict' is supported.
-- `dry_run` (Boolean) DryRun indicates whether to run the installer without actually applying the manifest to the system.
-The results will be put in a transaction result.
-- `operation` (String) Operation is the installing operation.
-Currently supported are 'install', 'delete'.
-
-<a id="nestedatt--items--spec--apps"></a>
-### Nested Schema for `items.spec.apps`
-
-Optional:
-
-- `app_id` (String) AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app.
-- `app_settings` (Attributes) AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.
-If AppSettings are not again mentioned on upgrade, values will remain as is. (see [below for nested schema](#nestedatt--items--spec--apps--app_settings))
-- `catalog` (String) Catalog of the app to be installed.
-This is where app manifest is retrieved from, along with some other metadata.
-- `version` (Attributes) Version of the App that is to be installed. (see [below for nested schema](#nestedatt--items--spec--apps--version))
-
-<a id="nestedatt--items--spec--apps--app_settings"></a>
-### Nested Schema for `items.spec.apps.app_settings`
-
-
-<a id="nestedatt--items--spec--apps--version"></a>
-### Nested Schema for `items.spec.apps.version`
-
-Optional:
-
-- `type` (String) The version type of the App. Currently supported: semver, commit.
-Default is semver.
-- `value` (String) The version of the App.
-If the VersionType is set to semver,
-then the semantic version of the git tag in the form of "apps/<appname>/<semver>" is used.
-If the VersionType is set to commit,
-then the commit reference (e.g. git hash) is expected.
-If the VersionType is set to alias,
-then one of [latest, latestMinor, latestMaintenance] is expected
-
-
-
 
 <a id="nestedatt--items--alarms"></a>
 ### Nested Schema for `items.alarms`
@@ -119,6 +69,53 @@ Read-Only:
 - `labels` (Map of String)
 - `name` (String)
 - `namespace` (String)
+
+
+<a id="nestedatt--items--spec"></a>
+### Nested Schema for `items.spec`
+
+Read-Only:
+
+- `apps` (Attributes List) Apps are the input apps to the installer. (see [below for nested schema](#nestedatt--items--spec--apps))
+- `auto_process_requirements` (List of String) AutoProcessRequirements tells the installer what it can do w.r.t. the requirements of an app.
+Currently only 'strict' is supported.
+- `dry_run` (Boolean) DryRun indicates whether to run the installer without actually applying the manifest to the system.
+The results will be put in a transaction result.
+- `operation` (String) Operation is the installing operation.
+Currently supported are 'install', 'delete'.
+
+<a id="nestedatt--items--spec--apps"></a>
+### Nested Schema for `items.spec.apps`
+
+Read-Only:
+
+- `app_id` (String) AppID of the app, which is the unique identifier of an app. It should be equal to the group of the app.
+- `app_settings` (Attributes) AppSettings defines a list of variables and their value. Only variables that are customized need to be mentioned.
+If AppSettings are not again mentioned on upgrade, values will remain as is. (see [below for nested schema](#nestedatt--items--spec--apps--app_settings))
+- `catalog` (String) Catalog of the app to be installed.
+This is where app manifest is retrieved from, along with some other metadata.
+- `version` (Attributes) Version of the App that is to be installed. (see [below for nested schema](#nestedatt--items--spec--apps--version))
+
+<a id="nestedatt--items--spec--apps--app_settings"></a>
+### Nested Schema for `items.spec.apps.app_settings`
+
+
+<a id="nestedatt--items--spec--apps--version"></a>
+### Nested Schema for `items.spec.apps.version`
+
+Read-Only:
+
+- `type` (String) The version type of the App. Currently supported: semver, commit.
+Default is semver.
+- `value` (String) The version of the App.
+If the VersionType is set to semver,
+then the semantic version of the git tag in the form of "apps/<appname>/<semver>" is used.
+If the VersionType is set to commit,
+then the commit reference (e.g. git hash) is expected.
+If the VersionType is set to alias,
+then one of [latest, latestMinor, latestMaintenance] is expected
+
+
 
 
 <a id="nestedatt--items--status"></a>
